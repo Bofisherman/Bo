@@ -6,10 +6,7 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     return render_template("index.html")
+
 if __name__ == "__main__":
-
-
-    port = int(os.environ.get("PORT", 5000))  # Render gives you a port
-    app.run(port=5050)
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 10000))  # use Render's port if defined
     app.run(host="0.0.0.0", port=port)
