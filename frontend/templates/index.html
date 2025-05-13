@@ -4,13 +4,18 @@
   <meta charset="UTF-8">
   <title>My Dashboard</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
   <script src="{{ url_for('static', filename='loading.js') }}" defer></script>
 </head>
 <body>
+<img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+
   <!-- Custom loading screen -->
-  <div id="loading-screen">
-    <h2> waking up, just a minute</h2>
-  </div>
+ <div id="loader">
+  <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="loader-logo">
+  <div class="spinner"></div>
+  <p>waking up, one minute!...</p>
+</div>v>
 
   <!-- Main content (hidden at first) -->
   <section class="hero" id="main-content" style="display: none;">
