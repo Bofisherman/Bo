@@ -1,13 +1,20 @@
-* {
+body, html {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  background: black;
+  color: white;
+  scroll-behavior: smooth;
 }
 
-body, html {
-  height: 100%;
-  font-family: 'Arial', sans-serif;
-  scroll-behavior: smooth;
+#loading-screen {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: white;
+  font-size: 1.5em;
 }
 
 .hero {
@@ -18,30 +25,13 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
-  text-shadow: 1px 1px 2px black;
-  font-family: sans-serif;
-  text-align: center;
   flex-direction: column;
-}
-
-.content {
-  text-align: center;
-}
-
-.content h1 {
-  font-size: 3em;
-}
-
-.content p {
-  font-size: 1.5em;
-  margin-top: 0.5em;
+  text-shadow: 2px 2px 4px black;
 }
 
 .continue {
   height: 100vh;
-  background: black;
-  color: white;
+  background-color: #111;
   display: flex;
   justify-content: center;
   align-items: center;
