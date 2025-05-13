@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  scroll-behavior: smooth;
+}
+
+.hero {
+  background-image: url('selfie.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 2px 2px 10px black;
+}
+
+.content {
+  text-align: center;
+}
+
+.content h1 {
+  font-size: 3em;
+}
+
+.content p {
+  font-size: 1.5em;
+  margin-top: 0.5em;
+}
+
+.continue {
+  height: 100vh;
+  background: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+}
