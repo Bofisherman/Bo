@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}BO Fisherman{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="top-logo">
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/lessons">Lessons</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/support">Support</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Page Content -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 BO Fisherman. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
