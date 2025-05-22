@@ -1,9 +1,10 @@
 # Byte-compiled files
+# Python bytecode
 __pycache__/
 *.py[cod]
 *.so
 
-# Environment files
+# Environment variables
 .env
 *.env
 
@@ -11,19 +12,20 @@ __pycache__/
 venv/
 env/
 .fisherman/
+lib/
+pyvenv.cfg
 
-# OS / editor files
+# OS/editor files
 .DS_Store
 *.swp
-
-# SQLite DB
-*.db
 
 # Flask-related
 instance/
 *.log
+*.sqlite3
+*.db
 
-# Large model/data files
+# ML/DL model/data files
 *.npy
 *.h5
 *.pkl
@@ -31,7 +33,8 @@ instance/
 *.onnx
 *.joblib
 
-# Pytest cache
+# Pytest
 .pytest_cache/
-# created by virtualenv automatically
 
+# VS Code settings (optional)
+.vscode/
