@@ -1,0 +1,37 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+*.so
+
+# Environment files
+.env
+*.env
+
+# Virtual environments
+venv/
+env/
+.fisherman/
+
+# OS / editor files
+.DS_Store
+*.swp
+
+# SQLite DB
+*.db
+
+# Flask-related
+instance/
+*.log
+
+# Large model/data files
+*.npy
+*.h5
+*.pkl
+*.pt
+*.onnx
+*.joblib
+
+# Pytest cache
+.pytest_cache/
+# created by virtualenv automatically
+

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Fishing Lessons - BO Fisherman{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Fishing Lessons</h1>
+
+  {% for cat in categories %}
+    <div class="category-section">
+      <h2>{{ cat['icon'] or '' }} {{ cat['name'] }}</h2>
+      <p>{{ cat['description'] or '' }}</p>
+
+      {% if category_lessons[cat['id']] %}
+        <div class="lesson-grid">
+          {% for lesson in category_lessons[cat['id']] %}
+            <div class="lesson-card">
+              <h3>{{ lesson['title'] }}</h3>
+              <p>{{ lesson['description'] }}</p>
+
+              {% if lesson['media_type'] == 'video' %}
+                <video controls width="100%">
+                  <source src="{{ lesson['media_url'] }}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              {% elif lesson['media_type'] == 'image' %}
+                <img src="{{ lesson['media_url'] }}" alt="{{ lesson['title'] }}" style="width:100%; border-radius: 8px;">
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p><em>No lessons yet in this category.</em></p>
+      {% endif %}
+      <hr>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

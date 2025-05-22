@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Home | BO Fisherman{% endblock %}
+
+{% block content %}
+  <section class="page-section">
+    <h2>Welcome to BO Fisherman!</h2>
+    <p>This is your dashboard for fishing lessons, tips, and support. Start your journey today.</p>
+  </section>
+
+  <section class="page-section">
+    <h3>🎣 Try It Now: Identify a Fish</h3>
+    <form method="POST" action="{{ url_for('main.identify_fish') }}" enctype="multipart/form-data">
+      <div style="margin-bottom: 1em;">
+        <input type="file" name="image" accept="image/*" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Identify Fish</button>
+    </form>
+  </section>
+{% endblock %}

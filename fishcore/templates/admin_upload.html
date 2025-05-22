@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Lesson - BO Fisherman{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Upload Fishing Lesson</h1>
+  <form method="POST" enctype="multipart/form-data">
+    <label>Title:</label><br>
+    <input type="text" name="title" required><br><br>
+
+    <label>Description:</label><br>
+    <textarea name="description" required></textarea><br><br>
+
+    <label>Category:</label><br>
+    <select name="category" required>
+      {% for cat in categories %}
+        <option value="{{ cat['id'] }}">{{ cat['icon'] or '' }} {{ cat['name'] }}</option>
+      {% endfor %}
+    </select><br><br>
+
+    <label>Media Type:</label><br>
+    <select name="media_type" required>
+      <option value="video">Video</option>
+      <option value="image">Image</option>
+      <option value="text">Text</option>
+    </select><br><br>
+
+    <label>Upload File:</label><br>
+    <input type="file" name="media" accept="video/*,image/*"><br><br>
+
+    <button type="submit">Upload Lesson</button>
+  </form>
+</div>
+{% endblock %}

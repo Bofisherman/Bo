@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}BO Fisherman{% endblock %}</title>
+
+  <!-- CSS & Icons -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="site-wrapper">
+
+    <header class="top-bar">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="top-logo">
+
+      <button class="menu-toggle" onclick="document.body.classList.toggle('menu-open')">
+        ☰
+      </button>
+
+      <nav class="main-nav">
+        <ul>
+          <li><a href="{{ url_for('main.home') }}">Home</a></li>
+          <li><a href="{{ url_for('main.lessons') }}">Lessons</a></li>
+
+          {% if session.get('username') %}
+            {% if session.get('is_admin') %}
+              <li><a href="{{ url_for('main.admin_dashboard') }}">Dashboard</a></li>
+              <li><a href="{{ url_for('main.manage_categories') }}">Categories</a></li>
+            {% else %}
+              <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
+              <li><a href="{{ url_for('main.support') }}">Support</a></li>
+            {% endif %}
+            <li><a href="{{ url_for('main.logout') }}">Logout ({{ session['username'] }})</a></li>
+          {% else %}
+            <li><a href="{{ url_for('main.login') }}">Login</a></li>
+            <li><a href="{{ url_for('main.register') }}">Register</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="flash-{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2025 BO Fisherman. All rights reserved.</p>
+    </footer>
+
+  </div>
+</body>
+</html>
