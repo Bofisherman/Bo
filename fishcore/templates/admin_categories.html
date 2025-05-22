@@ -1,33 +1,53 @@
 {% extends 'base.html' %}
-
 {% block title %}Manage Categories - BO Fisherman{% endblock %}
 
 {% block content %}
 <div class="container">
-  <h1>Manage Lesson Categories</h1>
+  <h1 class="page-title">📂 Manage Lesson Categories</h1>
 
-  <form method="POST" class="form-block">
-    <label>Name:</label><br>
-    <input type="text" name="name" required><br><br>
+  <!-- Category Creation Form -->
+  <div class="card">
+    <h2>Add New Category</h2>
+    <form method="POST" class="form-grid">
+      <div class="form-field">
+        <label>Name:</label>
+        <input type="text" name="name" required>
+      </div>
 
-    <label>Description (optional):</label><br>
-    <input type="text" name="description"><br><br>
+      <div class="form-field">
+        <label>Description (optional):</label>
+        <input type="text" name="description">
+      </div>
 
-    <label>Icon (emoji or text):</label><br>
-    <input type="text" name="icon"><br><br>
+      <div class="form-field">
+        <label>Icon (emoji or text):</label>
+        <input type="text" name="icon">
+      </div>
 
-    <button type="submit">Add Category</button>
-  </form>
+      <button type="submit" class="btn-primary">➕ Add Category</button>
+    </form>
+  </div>
 
   <hr>
 
-  <h2>Current Categories</h2>
-  <ul>
-    {% for cat in categories %}
-      <li><strong>{{ cat['icon'] or '' }} {{ cat['name'] }}</strong> — {{ cat['description'] or 'No description' }}</li>
+  <!-- Category List -->
+  <div class="card">
+    <h2>Current Categories</h2>
+    {% if categories %}
+      <ul class="category-list">
+        {% for cat in categories %}
+          <li>
+            <span class="category-icon">{{ cat['icon'] or '📁' }}</span>
+            <div class="category-info">
+              <strong>{{ cat['name'] }}</strong><br>
+              <small>{{ cat['description'] or 'No description' }}</small>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
     {% else %}
       <p>No categories yet.</p>
-    {% endfor %}
-  </ul>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

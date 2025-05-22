@@ -1,39 +1,57 @@
 {% extends 'base.html' %}
-
 {% block title %}Fishing Lessons - BO Fisherman{% endblock %}
 
 {% block content %}
 <div class="container">
-  <h1>Fishing Lessons</h1>
+  <h1 class="page-title">🎣 Fishing Lessons</h1>
 
-  {% for cat in categories %}
-    <div class="category-section">
-      <h2>{{ cat['icon'] or '' }} {{ cat['name'] }}</h2>
-      <p>{{ cat['description'] or '' }}</p>
-
-      {% if category_lessons[cat['id']] %}
-        <div class="lesson-grid">
-          {% for lesson in category_lessons[cat['id']] %}
-            <div class="lesson-card">
-              <h3>{{ lesson['title'] }}</h3>
-              <p>{{ lesson['description'] }}</p>
-
-              {% if lesson['media_type'] == 'video' %}
-                <video controls width="100%">
-                  <source src="{{ lesson['media_url'] }}" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-              {% elif lesson['media_type'] == 'image' %}
-                <img src="{{ lesson['media_url'] }}" alt="{{ lesson['title'] }}" style="width:100%; border-radius: 8px;">
-              {% endif %}
-            </div>
-          {% endfor %}
+  <!-- Category Buttons -->
+  <div class="category-grid">
+    {% for cat in categories %}
+      <button class="category-card" data-category-id="{{ cat['id'] }}">
+        <div class="progress-circle">✓</div>
+        <div>
+          <h3>{{ cat['name'] }}</h3>
+          <p>{{ cat['description'] or '' }}</p>
         </div>
-      {% else %}
-        <p><em>No lessons yet in this category.</em></p>
-      {% endif %}
-      <hr>
-    </div>
-  {% endfor %}
+      </button>
+    {% endfor %}
+  </div>
+
+  <!-- Lesson Viewer -->
+  <div id="lesson-viewer" class="lesson-viewer">
+    <p>Select a category to view its lessons.</p>
+  </div>
 </div>
+
+<script>
+  const categoryCards = document.querySelectorAll('.category-card');
+  const viewer = document.getElementById('lesson-viewer');
+  const lessonsData = {{ category_lessons | tojson }};
+
+  categoryCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.dataset.categoryId;
+      const lessons = lessonsData[id];
+
+      if (!lessons || lessons.length === 0) {
+        viewer.innerHTML = `<p><em>No lessons in this category.</em></p>`;
+        return;
+      }
+
+      const html = lessons.map(lesson => `
+        <div class="lesson-card">
+          <h3>${lesson.title}</h3>
+          <p>${lesson.description}</p>
+          ${lesson.media_type === 'video'
+            ? `<video controls width="100%"><source src="${lesson.media_url}" type="video/mp4"></video>`
+            : `<img src="${lesson.media_url}" alt="${lesson.title}" style="width:100%; border-radius:8px;">`
+          }
+        </div>
+      `).join('');
+
+      viewer.innerHTML = `<div class="lesson-grid">${html}</div>`;
+    });
+  });
+</script>
 {% endblock %}

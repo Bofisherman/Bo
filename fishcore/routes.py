@@ -108,17 +108,29 @@ def login_required(f):
 @login_required
 def lessons():
     conn = get_db_connection()
+    conn.row_factory = sqlite3.Row  # Ensures rows are dict-like
 
-    categories = conn.execute("SELECT * FROM categories ORDER BY display_order, name").fetchall()
+    categories = conn.execute(
+        "SELECT * FROM categories ORDER BY display_order, name"
+    ).fetchall()
 
     category_lessons = {}
     for cat in categories:
-        lessons = conn.execute("SELECT * FROM lessons WHERE category_id = ?", (cat['id'],)).fetchall()
-        category_lessons[cat['id']] = lessons
+        lessons = conn.execute(
+            "SELECT * FROM lessons WHERE category_id = ?", (cat['id'],)
+        ).fetchall()
+
+        # Convert each lesson row to a plain dictionary
+        category_lessons[cat['id']] = [dict(lesson) for lesson in lessons]
 
     conn.close()
 
-    return render_template('lessons.html', categories=categories, category_lessons=category_lessons)
+    return render_template(
+        'lessons.html',
+        categories=categories,
+        category_lessons=category_lessons
+    )
+
 @main_routes.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
@@ -228,6 +240,64 @@ def admin_dashboard():
 
     conn.close()
     return render_template('admin_dashboard.html', categories=categories, category_lessons=category_lessons)
+
+@main_routes.route('/admin/category/edit', methods=['POST'])
+@admin_required
+def edit_category():
+    category_id = request.form['category_id']
+    name = request.form['name']
+    description = request.form.get('description', '')
+    icon = request.form.get('icon', '')
+
+    conn = get_db_connection()
+    conn.execute(
+        "UPDATE categories SET name = ?, description = ?, icon = ? WHERE id = ?",
+        (name, description, icon, category_id)
+    )
+    conn.commit()
+    conn.close()
+
+    flash("Category updated successfully.", "success")
+    return redirect(url_for('main.admin_dashboard'))
+
+@main_routes.route('/admin/lesson/edit', methods=['POST'])
+@admin_required
+def edit_lesson():
+    lesson_id = request.form['lesson_id']
+    title = request.form['title']
+    description = request.form['description']
+    media_type = request.form['media_type']
+    file = request.files.get('media')
+
+    conn = get_db_connection()
+    lesson = conn.execute("SELECT * FROM lessons WHERE id = ?", (lesson_id,)).fetchone()
+
+    if not lesson:
+        flash("Lesson not found.", "error")
+        return redirect(url_for('main.admin_dashboard'))
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        folder = 'videos' if media_type == 'video' else 'images'
+        upload_path = os.path.join(current_app.static_folder, folder)
+        os.makedirs(upload_path, exist_ok=True)
+        filepath = os.path.join(upload_path, filename)
+        file.save(filepath)
+        media_url = url_for('static', filename=f"{folder}/{filename}")
+    else:
+        media_url = lesson['media_url']  # Keep current media
+
+    conn.execute('''
+        UPDATE lessons SET title = ?, description = ?, media_type = ?, media_url = ?
+        WHERE id = ?
+    ''', (title, description, media_type, media_url, lesson_id))
+    conn.commit()
+    conn.close()
+
+    flash("Lesson updated successfully.", "success")
+    return redirect(url_for('main.admin_dashboard'))
+
+
 @main_routes.route('/identify', methods=['GET', 'POST'])
 def identify_fish():
     if request.method == 'POST':
@@ -244,3 +314,25 @@ def identify_fish():
             return redirect('/')
     return redirect('/')
 
+@main_routes.route('/admin/category/delete', methods=['POST'])
+@admin_required
+def delete_category():
+    category_id = request.form['category_id']
+    conn = get_db_connection()
+    conn.execute("DELETE FROM lessons WHERE category_id = ?", (category_id,))
+    conn.execute("DELETE FROM categories WHERE id = ?", (category_id,))
+    conn.commit()
+    conn.close()
+    flash("Category and all related lessons deleted.", "success")
+    return redirect(url_for('main.admin_dashboard'))
+
+@main_routes.route('/admin/lesson/delete', methods=['POST'])
+@admin_required
+def delete_lesson():
+    lesson_id = request.form['lesson_id']
+    conn = get_db_connection()
+    conn.execute("DELETE FROM lessons WHERE id = ?", (lesson_id,))
+    conn.commit()
+    conn.close()
+    flash("Lesson deleted successfully.", "success")
+    return redirect(url_for('main.admin_dashboard'))
