@@ -1,11 +1,14 @@
+<!-- templates/result.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Result</title>
+  <meta charset="UTF-8">
+  <title>Fish Identification Result</title>
 </head>
 <body>
-    <h1>Prediction Result</h1>
-    <p>Predicted Fish Species: <strong>{{ label }}</strong></p>
-    <a href="/fishcore/static">Try another image</a>
+  <h1>Fish Identification Result</h1>
+  <p><strong>Species:</strong> {{ result.species }}</p>
+  <p><strong>Confidence:</strong> {{ result.confidence }}</p>
+  <a href="/">Back to Home</a>
 </body>
 </html>

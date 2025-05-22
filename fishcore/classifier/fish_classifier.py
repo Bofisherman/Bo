@@ -19,18 +19,21 @@ transform = transforms.Compose([
     transforms.ToTensor()
 ])
 
+# fishcore/classifier/fish_classifier.py
+
 def classify_fish(image_file):
-    model = torch.load(MODEL_PATH, map_location=torch.device("cpu"))
-    model.eval()
-    feature_extractor = torch.nn.Sequential(*list(model.children())[:-1])
+    """
+    Mock function for classifying fish. Used for development testing
+    when actual model files are not yet available or are too large
+    for free deployment environments.
 
-    labels = np.load(LABELS_PATH)
-    embeddings = np.load(EMBEDDINGS_PATH)
-    tree = KDTree(embeddings)
+    Parameters:
+    - image_file: FileStorage object from Flask form
 
-    image = Image.open(image_file.stream).convert("RGB")
-    tensor = transform(image).unsqueeze(0)
-    with torch.no_grad():
-        feature = feature_extractor(tensor).squeeze().numpy().reshape(1, -1)
-    dist, idx = tree.query(feature, k=1)
-    return labels[idx[0][0]]
+    Returns:
+    - dict: fake prediction result
+    """
+    return {
+        "species": "Test Fish (Example)",
+        "confidence": "This is a mock result for development only."
+    }

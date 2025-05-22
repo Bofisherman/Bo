@@ -18,4 +18,6 @@ torch
 torchvision
 torchaudio
 scikit-learn
-numpy
+numpy<2
+
+
