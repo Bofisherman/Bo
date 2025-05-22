@@ -26,13 +26,16 @@ instance/
 *.db
 
 # ML/DL model/data files
+fish_dataset/
 *.npy
-*.h5
 *.pkl
+*.h5
 *.pt
 *.onnx
-*.joblib
-
+*.jpg
+*.jpeg
+*.png
+*.gif
 # Pytest
 .pytest_cache/
 
