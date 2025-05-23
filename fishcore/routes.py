@@ -1,5 +1,3 @@
-import os
-import sqlite3
 from flask import Blueprint, render_template, request, redirect, session, url_for, flash, jsonify, current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -8,85 +6,106 @@ from flask_mail import Message
 from fishcore.classifier.fish_classifier import classify_fish
 from fishcore import mail
 from fishcore.config import Config
+from fishcore.db import get_db
+from fishcore.models import User, Category, Lesson
+from utils.s3_upload import upload_file_to_s3
+import re
 
 main_routes = Blueprint('main', __name__)
 
-# === Helpers ===
-def get_db_connection():
-    conn = sqlite3.connect('videos.db')
-    conn.row_factory = sqlite3.Row
-    return conn
-
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in Config.ALLOWED_EXTENSIONS
-
-# === Routes ===
-
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
 
 @main_routes.route('/')
 def home():
     return render_template("home.html")
 
-# Define your other routes (register, login, contact, etc.) here like you already have
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
-
-def get_db_connection():
-    conn = sqlite3.connect('videos.db')
-    conn.row_factory = sqlite3.Row
-    return conn
 @main_routes.route('/register', methods=['GET', 'POST'])
 def register():
+    db = next(get_db())
     if request.method == 'POST':
         username = request.form['username']
-        password = generate_password_hash(request.form['password'])
+        password = request.form['password']
 
-        conn = get_db_connection()
-        try:
-            conn.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
-            conn.commit()
-            flash("Registered successfully. You can now log in.", "success")
-        except sqlite3.IntegrityError:
+        # ✅ Check email format
+        email_regex = r"[^@]+@[^@]+\.[^@]+"
+        if not re.match(email_regex, username):
+            flash("Please enter a valid email address.", "error")
+            return redirect('/register')
+
+        if db.query(User).filter_by(username=username).first():
             flash("Username already exists.", "error")
             return redirect('/register')
-        finally:
-            conn.close()
 
+        hashed_pw = generate_password_hash(password)
+        new_user = User(username=username, password=hashed_pw)
+        db.add(new_user)
+        db.commit()
+
+        flash("Registered successfully. You can now log in.", "success")
         return redirect('/login')
+
     return render_template('register.html')
 
 @main_routes.route('/debug_session')
 def debug_session():
-    from flask import jsonify
     return jsonify(dict(session))
+
+from flask_dance.contrib.google import google
+from fishcore.models import User
+from fishcore.db import get_db
+from werkzeug.security import generate_password_hash
 
 @main_routes.route('/login', methods=['GET', 'POST'])
 def login():
+    db = next(get_db())
+
     if request.method == 'POST':
         username = request.form['username']
         password_input = request.form['password']
 
-        # Log input to debug iPhone issues
-        print(f"Username input (raw): [{username.encode('utf-8')}]")
-        print(f"Password input (raw): [{password_input.encode('utf-8')}]")
+        user = db.query(User).filter_by(username=username).first()
 
-        conn = get_db_connection()
-        user = conn.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
-        conn.close()
+        if user and check_password_hash(user.password, password_input):
+            session['user_id'] = user.id
+            session['username'] = user.username
+            session['is_admin'] = user.is_admin
+            flash("Welcome back!", "success")
+            return redirect('/admin/categories' if user.is_admin else '/lessons')
 
-        if user and check_password_hash(user['password'], password_input):
-            session['user_id'] = user['id']
-            session['username'] = user['username']
-            session['is_admin'] = user['is_admin']
-
-            return redirect('/admin/categories' if user['is_admin'] else '/lessons')
-
-        # ✅ Show error if login fails
-        flash("Invalid username or password", "error")
+        flash("Invalid email or password", "error")
         return redirect('/login')
 
     return render_template('login.html')
+@main_routes.route("/login/google")
+def google_login():
+    db = next(get_db())
+
+    if not google.authorized:
+        return redirect(url_for("google.login"))
+
+    resp = google.get("/oauth2/v2/userinfo")
+    if not resp.ok:
+        flash("Failed to fetch user info from Google.", "error")
+        return redirect("/login")
+
+    user_info = resp.json()
+    email = user_info["email"]
+
+    # Check if user already exists
+    user = db.query(User).filter_by(username=email).first()
+    if not user:
+        # Create a new user
+        user = User(username=email, password=generate_password_hash("google-auth"), is_admin=False)
+        db.add(user)
+        db.commit()
+
+    session['user_id'] = user.id
+    session['username'] = user.username
+    session['is_admin'] = user.is_admin
+
+    flash("Logged in with Google!", "success")
+    return redirect('/admin/categories' if user.is_admin else '/lessons')
 
 
 @main_routes.route('/logout')
@@ -103,33 +122,15 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-
 @main_routes.route('/lessons')
 @login_required
 def lessons():
-    conn = get_db_connection()
-    conn.row_factory = sqlite3.Row  # Ensures rows are dict-like
-
-    categories = conn.execute(
-        "SELECT * FROM categories ORDER BY display_order, name"
-    ).fetchall()
-
-    category_lessons = {}
-    for cat in categories:
-        lessons = conn.execute(
-            "SELECT * FROM lessons WHERE category_id = ?", (cat['id'],)
-        ).fetchall()
-
-        # Convert each lesson row to a plain dictionary
-        category_lessons[cat['id']] = [dict(lesson) for lesson in lessons]
-
-    conn.close()
-
-    return render_template(
-        'lessons.html',
-        categories=categories,
-        category_lessons=category_lessons
-    )
+    db = next(get_db())
+    categories = db.query(Category).order_by(Category.display_order, Category.name).all()
+    category_lessons = {
+        cat.id: db.query(Lesson).filter_by(category_id=cat.id).all() for cat in categories
+    }
+    return render_template('lessons.html', categories=categories, category_lessons=category_lessons)
 
 @main_routes.route('/contact', methods=['GET', 'POST'])
 def contact():
@@ -138,11 +139,9 @@ def contact():
         email = request.form['email']
         message = request.form['message']
 
-        print(f"Got message from {name} <{email}>: {message}")  # 👈 log to console
-
         msg = Message(
             subject=f"Message from {name}",
-            recipients=["captainliangbo@gmail.com"],  # Where YOU want to receive it
+            recipients=["captainliangbo@gmail.com"],
             body=f"From: {name} <{email}>\n\n{message}"
         )
 
@@ -154,13 +153,12 @@ def contact():
             flash("There was a problem sending your message.", "error")
 
         return redirect('/contact')
-
     return render_template('contact.html')
-
 
 @main_routes.route('/support')
 def support():
     return render_template('support.html')
+
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -173,8 +171,7 @@ def admin_required(f):
 @main_routes.route('/admin/upload', methods=['GET', 'POST'])
 @admin_required
 def upload_lesson():
-    conn = get_db_connection()
-
+    db = next(get_db())
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
@@ -185,118 +182,102 @@ def upload_lesson():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             folder = 'videos' if media_type == 'video' else 'images'
-            upload_path = os.path.join(current_app.static_folder, folder)  # ✅ Safe and dynamic
 
-            os.makedirs(upload_path, exist_ok=True)
-            filepath = os.path.join(upload_path, filename)
-            file.save(filepath)
+            try:
+                media_url = upload_file_to_s3(file, filename, folder=folder)
+            except Exception as e:
+                flash(f"Upload failed: {e}", "error")
+                return redirect('/admin/upload')
 
-            media_url = url_for('static', filename=f"{folder}/{filename}")
-
-            conn.execute(
-                '''INSERT INTO lessons (title, description, media_type, media_url, category_id, uploaded_by)
-                   VALUES (?, ?, ?, ?, ?, ?)''',
-                (title, description, media_type, media_url, category_id, session['username'])
-            )
-            conn.commit()
+            lesson = Lesson(title=title, description=description, media_type=media_type,
+                            media_url=media_url, category_id=category_id, uploaded_by=session['username'])
+            db.add(lesson)
+            db.commit()
             flash("Lesson uploaded successfully.", "success")
         else:
             flash("Invalid file or missing input.", "error")
 
-    # Fetch categories for dropdown
-    categories = conn.execute("SELECT * FROM categories ORDER BY display_order, name").fetchall()
-    conn.close()
+    categories = db.query(Category).order_by(Category.display_order, Category.name).all()
     return render_template('admin_upload.html', categories=categories)
+
 @main_routes.route('/admin/categories', methods=['GET', 'POST'])
 @admin_required
 def manage_categories():
-    conn = get_db_connection()
-
+    db = next(get_db())
     if request.method == 'POST':
         name = request.form['name']
         description = request.form.get('description', '')
         icon = request.form.get('icon', '')
 
-        conn.execute(
-            "INSERT INTO categories (name, description, icon) VALUES (?, ?, ?)",
-            (name, description, icon)
-        )
-        conn.commit()
+        category = Category(name=name, description=description, icon=icon)
+        db.add(category)
+        db.commit()
         flash("Category added successfully.", "success")
 
-    categories = conn.execute("SELECT * FROM categories ORDER BY display_order ASC, id ASC").fetchall()
-    conn.close()
+    categories = db.query(Category).order_by(Category.display_order, Category.id).all()
     return render_template('admin_categories.html', categories=categories)
+
 @main_routes.route('/admin/dashboard')
 @admin_required
 def admin_dashboard():
-    conn = get_db_connection()
-    categories = conn.execute("SELECT * FROM categories ORDER BY display_order, name").fetchall()
-
-    category_lessons = {}
-    for cat in categories:
-        lessons = conn.execute("SELECT * FROM lessons WHERE category_id = ? ORDER BY created_at DESC", (cat['id'],)).fetchall()
-        category_lessons[cat['id']] = lessons
-
-    conn.close()
+    db = next(get_db())
+    categories = db.query(Category).order_by(Category.display_order, Category.name).all()
+    category_lessons = {
+        cat.id: db.query(Lesson).filter_by(category_id=cat.id).order_by(Lesson.created_at.desc()).all()
+        for cat in categories
+    }
     return render_template('admin_dashboard.html', categories=categories, category_lessons=category_lessons)
 
 @main_routes.route('/admin/category/edit', methods=['POST'])
 @admin_required
 def edit_category():
+    db = next(get_db())
     category_id = request.form['category_id']
     name = request.form['name']
     description = request.form.get('description', '')
     icon = request.form.get('icon', '')
 
-    conn = get_db_connection()
-    conn.execute(
-        "UPDATE categories SET name = ?, description = ?, icon = ? WHERE id = ?",
-        (name, description, icon, category_id)
-    )
-    conn.commit()
-    conn.close()
-
-    flash("Category updated successfully.", "success")
+    category = db.query(Category).get(category_id)
+    if category:
+        category.name = name
+        category.description = description
+        category.icon = icon
+        db.commit()
+        flash("Category updated successfully.", "success")
     return redirect(url_for('main.admin_dashboard'))
 
 @main_routes.route('/admin/lesson/edit', methods=['POST'])
 @admin_required
 def edit_lesson():
+    db = next(get_db())
     lesson_id = request.form['lesson_id']
     title = request.form['title']
     description = request.form['description']
     media_type = request.form['media_type']
     file = request.files.get('media')
 
-    conn = get_db_connection()
-    lesson = conn.execute("SELECT * FROM lessons WHERE id = ?", (lesson_id,)).fetchone()
-
+    lesson = db.query(Lesson).get(lesson_id)
     if not lesson:
         flash("Lesson not found.", "error")
         return redirect(url_for('main.admin_dashboard'))
 
+    lesson.title = title
+    lesson.description = description
+    lesson.media_type = media_type
+
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         folder = 'videos' if media_type == 'video' else 'images'
-        upload_path = os.path.join(current_app.static_folder, folder)
-        os.makedirs(upload_path, exist_ok=True)
-        filepath = os.path.join(upload_path, filename)
-        file.save(filepath)
-        media_url = url_for('static', filename=f"{folder}/{filename}")
-    else:
-        media_url = lesson['media_url']  # Keep current media
+        try:
+            media_url = upload_file_to_s3(file, filename, folder=folder)
+            lesson.media_url = media_url
+        except Exception as e:
+            flash(f"Upload failed: {e}", "error")
+            return redirect(url_for('main.admin_dashboard'))
 
-    conn.execute('''
-        UPDATE lessons SET title = ?, description = ?, media_type = ?, media_url = ?
-        WHERE id = ?
-    ''', (title, description, media_type, media_url, lesson_id))
-    conn.commit()
-    conn.close()
-
+    db.commit()
     flash("Lesson updated successfully.", "success")
     return redirect(url_for('main.admin_dashboard'))
-
 
 @main_routes.route('/identify', methods=['GET', 'POST'])
 def identify_fish():
@@ -317,22 +298,20 @@ def identify_fish():
 @main_routes.route('/admin/category/delete', methods=['POST'])
 @admin_required
 def delete_category():
+    db = next(get_db())
     category_id = request.form['category_id']
-    conn = get_db_connection()
-    conn.execute("DELETE FROM lessons WHERE category_id = ?", (category_id,))
-    conn.execute("DELETE FROM categories WHERE id = ?", (category_id,))
-    conn.commit()
-    conn.close()
+    db.query(Lesson).filter_by(category_id=category_id).delete()
+    db.query(Category).filter_by(id=category_id).delete()
+    db.commit()
     flash("Category and all related lessons deleted.", "success")
     return redirect(url_for('main.admin_dashboard'))
 
 @main_routes.route('/admin/lesson/delete', methods=['POST'])
 @admin_required
 def delete_lesson():
+    db = next(get_db())
     lesson_id = request.form['lesson_id']
-    conn = get_db_connection()
-    conn.execute("DELETE FROM lessons WHERE id = ?", (lesson_id,))
-    conn.commit()
-    conn.close()
+    db.query(Lesson).filter_by(id=lesson_id).delete()
+    db.commit()
     flash("Lesson deleted successfully.", "success")
     return redirect(url_for('main.admin_dashboard'))
