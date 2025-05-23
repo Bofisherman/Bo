@@ -21,3 +21,4 @@ scikit-learn
 numpy<2
 
 
+python-dotenv
