@@ -12,7 +12,7 @@ gunicorn
 sqlalchemy
 # Image handling
 Pillow
-
+psycopg2-binary
 # ML/AI
 torch
 torchvision
