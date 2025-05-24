@@ -1,3 +1,4 @@
+{# base.html #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,61 +6,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}BO Fisherman{% endblock %}</title>
 
-  <!-- CSS & Icons -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- Webflow Stylesheets -->
+  <link href="{{ url_for('static', filename='css/normalize.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/webflow.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/bofisherman-com.webflow.css') }}" rel="stylesheet">
+
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" href="{{ url_for('static', filename='images/logo.png') }}">
+<link rel="icon" sizes="192x192" href="{{ url_for('static', filename='images/logo.png') }}">
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans&family=Lexend&display=swap" rel="stylesheet">
+
+  {% block extra_head %}{% endblock %}
 </head>
 <body>
-  <div class="site-wrapper">
+  {% include 'navbar.html' %}
 
-    <header class="top-bar">
-      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="top-logo">
+  <main>
+    {% block content %}{% endblock %}
+  </main>
 
-      <button class="menu-toggle" onclick="document.body.classList.toggle('menu-open')">
-        ☰
-      </button>
+  {% include 'footer.html' %}
 
-      <nav class="main-nav">
-        <ul>
-          <li><a href="{{ url_for('main.home') }}">Home</a></li>
-          <li><a href="{{ url_for('main.lessons') }}">Lessons</a></li>
-
-          {% if session.get('username') %}
-            {% if session.get('is_admin') %}
-              <li><a href="{{ url_for('main.admin_dashboard') }}">Dashboard</a></li>
-              <li><a href="{{ url_for('main.manage_categories') }}">Categories</a></li>
-            {% else %}
-              <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
-              <li><a href="{{ url_for('main.support') }}">Support</a></li>
-            {% endif %}
-            <li><a href="{{ url_for('main.logout') }}">Logout ({{ session['username'] }})</a></li>
-          {% else %}
-            <li><a href="{{ url_for('main.login') }}">Login</a></li>
-            <li><a href="{{ url_for('main.register') }}">Register</a></li>
-          {% endif %}
-        </ul>
-      </nav>
-    </header>
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul class="flashes">
-          {% for category, message in messages %}
-            <li class="flash-{{ category }}">{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-
-    <main>
-      {% block content %}{% endblock %}
-    </main>
-
-    <footer class="footer">
-      <p>&copy; 2025 BO Fisherman. All rights reserved.</p>
-    </footer>
-
-  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+  <script src="{{ url_for('static', filename='js/webflow.js') }}"></script>
 </body>
 </html>

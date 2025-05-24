@@ -1,5 +1,7 @@
-from fishcore.db import engine
-from fishcore.models import Base
+# fishcore/init_db.py
+
+from fishcore.db import engine, Base
+from fishcore.models import User, Category, Lesson  # this ensures models get registered!
 
 def initialize_database():
     Base.metadata.create_all(bind=engine)

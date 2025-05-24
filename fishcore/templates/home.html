@@ -1,19 +1,26 @@
 {% extends "base.html" %}
+
 {% block title %}Home | BO Fisherman{% endblock %}
 
 {% block content %}
-  <section class="page-section">
-    <h2>Welcome to BO Fisherman!</h2>
-    <p>This is your dashboard for fishing lessons, tips, and support. Start your journey today.</p>
-  </section>
+<section class="section inverse-section">
+  <div class="container">
+    <h1 class="h1-heading">Master fishing with our expert courses</h1>
+    <p class="subheading">Access comprehensive online courses and shop for premium fishing gear.</p>
+    <div class="button-group">
+      <a href="#" class="button primary-button-on-inverse w-button">Enroll now</a>
+      <a href="#" class="button secondary-button secondary-button-on-inverse w-button">Browse gear</a>
+    </div>
+  </div>
+</section>
 
-  <section class="page-section">
-    <h3>🎣 Try It Now: Identify a Fish</h3>
-    <form method="POST" action="{{ url_for('main.identify_fish') }}" enctype="multipart/form-data">
-      <div style="margin-bottom: 1em;">
-        <input type="file" name="image" accept="image/*" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Identify Fish</button>
-    </form>
-  </section>
+{% include 'course_cards.html' %}
+{% include 'faq_section.html' %}
+{% include 'pricing_section.html' %}
+{% include 'blog_teasers.html' %}
+{% include 'testimonials_section.html' %}
+{% include 'partners_section.html' %}
+{% include 'signup_form.html' %}
+{% include 'contact_cta.html' %}
 {% endblock %}
+

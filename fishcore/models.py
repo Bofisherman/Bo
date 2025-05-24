@@ -1,13 +1,13 @@
-from sqlalchemy import Column, Integer, String, Boolean, Text, ForeignKey, TIMESTAMP
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.sql import func
+# fishcore/models.py
 
-Base = declarative_base()
+from sqlalchemy import Column, Integer, String, Boolean, Text, ForeignKey, TIMESTAMP
+from sqlalchemy.sql import func
+from .db import Base  # ✅ Use the shared Base from db.py
 
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String(100), unique=True, nullable=False)
+    email = Column(String(100), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
     is_admin = Column(Boolean, default=False)
 
@@ -19,7 +19,6 @@ class Category(Base):
     icon = Column(String(255))
     display_order = Column(Integer, default=0)
 
-
 class Lesson(Base):
     __tablename__ = "lessons"
     id = Column(Integer, primary_key=True, index=True)
@@ -29,4 +28,4 @@ class Lesson(Base):
     media_url = Column(String(512), nullable=False)
     category_id = Column(Integer, ForeignKey("categories.id"))
     uploaded_by = Column(String(100))
-    created_at = Column(TIMESTAMP, server_default=func.now())  # ✅ correct format
+    created_at = Column(TIMESTAMP, server_default=func.now())

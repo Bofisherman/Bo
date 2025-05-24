@@ -3,6 +3,7 @@ from flask import Flask
 from flask_mail import Mail
 from fishcore.config import Config
 
+
 mail = Mail()
 
 def create_app():

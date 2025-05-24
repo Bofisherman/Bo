@@ -20,5 +20,6 @@ torchaudio
 scikit-learn
 numpy<2
 flask-dance
+boto3
 
 python-dotenv

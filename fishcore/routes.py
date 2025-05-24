@@ -18,27 +18,26 @@ def allowed_file(filename):
 
 @main_routes.route('/')
 def home():
-    return render_template("home.html")
+    return render_template("home.html", lessons=lessons)
 
 @main_routes.route('/register', methods=['GET', 'POST'])
 def register():
     db = next(get_db())
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        email = request.form.get('email')
+        password = request.form.get('password')
 
-        # ✅ Check email format
         email_regex = r"[^@]+@[^@]+\.[^@]+"
-        if not re.match(email_regex, username):
+        if not re.match(email_regex, email):
             flash("Please enter a valid email address.", "error")
             return redirect('/register')
 
-        if db.query(User).filter_by(username=username).first():
-            flash("Username already exists.", "error")
+        if db.query(User).filter_by(email=email).first():
+            flash("Email already registered.", "error")
             return redirect('/register')
 
         hashed_pw = generate_password_hash(password)
-        new_user = User(username=username, password=hashed_pw)
+        new_user = User(email=email, password=hashed_pw)
         db.add(new_user)
         db.commit()
 
@@ -46,6 +45,7 @@ def register():
         return redirect('/login')
 
     return render_template('register.html')
+
 
 @main_routes.route('/debug_session')
 def debug_session():
@@ -61,14 +61,14 @@ def login():
     db = next(get_db())
 
     if request.method == 'POST':
-        username = request.form['username']
-        password_input = request.form['password']
+        email = request.form.get('email')
+        password_input = request.form.get('password')
 
-        user = db.query(User).filter_by(username=username).first()
+        user = db.query(User).filter_by(email=email).first()
 
         if user and check_password_hash(user.password, password_input):
             session['user_id'] = user.id
-            session['username'] = user.username
+            session['email'] = user.email
             session['is_admin'] = user.is_admin
             flash("Welcome back!", "success")
             return redirect('/admin/categories' if user.is_admin else '/lessons')
