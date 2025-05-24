@@ -19,6 +19,6 @@ torchvision
 torchaudio
 scikit-learn
 numpy<2
-
+flask-dance
 
 python-dotenv
