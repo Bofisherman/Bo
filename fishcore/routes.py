@@ -11,6 +11,8 @@ from fishcore.models import User, Category, Lesson
 from utils.s3_upload import upload_file_to_s3
 import re
 from dotenv import load_dotenv
+import os
+
 load_dotenv()
 main_routes = Blueprint('main', __name__)
 
@@ -390,4 +392,61 @@ def faq():
 @main_routes.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', user_email=session.get('email'))
+    db = next(get_db())
+    user = db.query(User).get(session['user_id'])
+    lessons = db.query(Lesson).filter_by(uploaded_by=user.email).all()
+    return render_template('profile.html', user=user, lessons=lessons)
+
+@main_routes.route('/upload_profile_picture', methods=['POST'])
+@login_required
+def upload_profile_picture():
+    db = next(get_db())
+    file = request.files.get('profile_picture')
+    if file:
+        filename = secure_filename(file.filename)
+        upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
+        os.makedirs(upload_folder, exist_ok=True)
+        filepath = os.path.join(upload_folder, filename)
+        file.save(filepath)
+
+        user = db.query(User).get(session['user_id'])
+        user.profile_picture = filename
+        db.commit()
+
+        flash("Profile picture updated!", "success")
+    else:
+        flash("No file selected.", "error")
+
+    return redirect(url_for('main.profile'))
+
+@main_routes.route('/edit_profile')
+@login_required
+def edit_profile():
+    db = next(get_db())
+    user = db.query(User).get(session['user_id'])
+    return render_template('edit_profile.html', user=user)
+
+
+@main_routes.route('/update-profile', methods=['POST'])
+@login_required
+def update_profile():
+    db = next(get_db())
+    user = db.query(User).get(session['user_id'])
+
+    user.birthdate = request.form.get('birthdate')  # already a string
+    user.phone = request.form.get('phone')
+    user.city = request.form.get('city')
+    user.country = request.form.get('country')
+    user.bio = request.form.get('bio')  # Now it works
+
+    file = request.files.get('profile_picture')
+    if file and file.filename:
+        filename = secure_filename(file.filename)
+        upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
+        os.makedirs(upload_folder, exist_ok=True)
+        file.save(os.path.join(upload_folder, filename))
+        user.profile_picture = filename
+
+    db.commit()
+    flash("Profile updated successfully.", "success")
+    return redirect(url_for('main.profile'))

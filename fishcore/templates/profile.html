@@ -1,13 +1,43 @@
 {% extends "base.html" %}
-
 {% block content %}
-<section class="section">
-  <div class="container" style="text-align: center; padding: 4rem 2rem;">
-    <h1 class="h1-heading">Your Profile</h1>
-    <p class="paragraph-lg">Welcome, {{ user_email }}!</p>
+<section class="min-h-screen py-12 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="flex flex-col items-center text-center">
+      <div class="relative">
+        <div class="w-32 h-32 rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 p-[3px]">
+          <img src="{{ url_for('static', filename='uploads/' ~ (user.profile_picture or 'default-avatar.png')) }}"
+               class="w-full h-full object-cover rounded-full border-4 border-[#0F0F0E]">
+        </div>
+      </div>
+      <h1 class="mt-4 text-3xl font-bold">{{ user.first_name or "Your" }} {{ user.last_name or "Name" }}</h1>
+      <p class="text-gray-400">{{ user.email }}</p>
+      <a href="{{ url_for('main.edit_profile') }}" class="mt-4 bg-[#A7F3D0] text-black px-5 py-2 rounded-full font-medium hover:bg-[#8bd2b5] transition">
+        Edit Profile
+      </a>
+    </div>
 
-    <div style="margin-top: 2rem;">
-      <a href="{{ url_for('main.logout') }}" class="button secondary-button">Logout</a>
+    <div class="grid grid-cols-2 gap-6 mt-10 text-sm">
+      <div>
+        <p class="text-gray-400">Birthdate</p>
+        <p class="mt-1">{{ user.birthdate or "—" }}</p>
+      </div>
+      <div>
+        <p class="text-gray-400">Phone</p>
+        <p class="mt-1">{{ user.phone or "—" }}</p>
+      </div>
+      <div>
+        <p class="text-gray-400">City</p>
+        <p class="mt-1">{{ user.city or "—" }}</p>
+      </div>
+      <div>
+        <p class="text-gray-400">Country</p>
+        <p class="mt-1">{{ user.country or "—" }}</p>
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <h2 class="text-xl font-semibold mb-2">About</h2>
+      <p class="text-gray-300">{{ user.bio or "No bio added yet. Click 'Edit Profile' to tell us about yourself." }}</p>
     </div>
   </div>
 </section>

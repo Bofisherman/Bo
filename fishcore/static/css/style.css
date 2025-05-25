@@ -558,6 +558,12 @@ input[type="text"] {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  position: relative;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
 }
 
 .nav-right {
@@ -571,28 +577,43 @@ input[type="text"] {
 
 .nav-toggle {
   display: none;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   cursor: pointer;
 }
 
 @media (max-width: 768px) {
+  .nav-right {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+  }
+
   .nav-menu-list {
     flex-direction: column;
     display: none;
     background: #111;
-    position: absolute;
-    top: 60px;
-    right: 10px;
     padding: 1rem;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    width: 180px;
   }
 
-  .nav-right.active .nav-menu-list {
+  .nav-menu-list.active {
     display: flex;
+  }
+
+  .nav-right {
+    flex-direction: column;
   }
 
   .nav-toggle {
     display: block;
+    position: absolute;
+    right: 1rem;
+    top: 1.2rem;
+    z-index: 1000;
+    background: none;
+    border: none;
+    color: white;
   }
 }

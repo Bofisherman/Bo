@@ -7,10 +7,18 @@
   <title>{% block title %}BO Fisherman{% endblock %}</title>
 
   <!-- Webflow Stylesheets -->
+ <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/flowbite@1.6.4/dist/flowbite.min.js"></script>
+<script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/webflow.js') }}"></script>
+  <link href="https://unpkg.com/flowbite@1.6.4/dist/flowbite.min.css" rel="stylesheet" />
   <link href="{{ url_for('static', filename='css/normalize.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/webflow.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/bofisherman-com.webflow.css') }}" rel="stylesheet">
+<!-- Tailwind CDN (for development / testing) -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
  <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}?v=2" type="image/x-icon">
 
@@ -22,15 +30,15 @@
 </head>
 <body>
   {% include 'navbar.html' %}
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <ul class="flashes">
-      {% for category, message in messages %}
-        <li class="alert alert-{{ category }}">{{ message }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class="flashes">
+        {% for category, message in messages %}
+          <li class="alert alert-{{ category }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
 
   <main>
     {% block content %}{% endblock %}
@@ -38,7 +46,24 @@
 
   {% include 'footer.html' %}
 
+  <!-- Other JS scripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
   <script src="{{ url_for('static', filename='js/webflow.js') }}"></script>
+
+  <!-- 🔧 Place toggleMenu here at the end -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('navMenu');
+      const toggle = document.getElementById('navToggle');
+
+      if (menu.classList.contains('active')) {
+        menu.classList.remove('active');
+        toggle.textContent = '☰'; // hamburger icon
+      } else {
+        menu.classList.add('active');
+        toggle.textContent = '←'; // back arrow icon
+      }
+    }
+  </script>
 </body>
 </html>

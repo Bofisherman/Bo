@@ -11,6 +11,22 @@ class User(Base):
     password = Column(String(255), nullable=False)
     is_admin = Column(Boolean, default=False)
 
+    # Additional profile fields
+    first_name = Column(String(100))
+    last_name = Column(String(100))
+    birthdate = Column(String(20))  # You could also use Date if you want strict type
+    phone = Column(String(20))
+
+    # Address fields
+    street = Column(String(255))
+    house_number = Column(String(20))
+    zip_code = Column(String(20))
+    city = Column(String(100))
+    country = Column(String(100))
+
+    profile_picture = Column(String(255))  # URL or filename
+    bio = Column(Text, nullable=True)
+
 class Category(Base):
     __tablename__ = "categories"
     id = Column(Integer, primary_key=True, index=True)

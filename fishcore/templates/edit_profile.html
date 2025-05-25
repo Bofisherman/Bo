@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="min-h-screen py-12 px-4">
+  <div class="max-w-xl mx-auto bg-[#151513] p-8 rounded-xl shadow">
+    <h2 class="text-2xl font-bold mb-6">Edit Profile</h2>
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('main.update_profile') }}" class="space-y-5">
+      <div>
+        <label class="block text-gray-400 mb-1">Profile Picture</label>
+        <input type="file" name="profile_picture" accept="image/*"
+               class="w-full bg-gray-800 text-white rounded p-2">
+      </div>
+      <div>
+        <label class="block text-gray-400 mb-1">Birthdate</label>
+        <input type="date" name="birthdate" value="{{ user.birthdate }}" class="w-full bg-gray-800 text-white rounded p-2">
+      </div>
+      <div>
+        <label class="block text-gray-400 mb-1">Phone</label>
+        <input type="text" name="phone" value="{{ user.phone }}" class="w-full bg-gray-800 text-white rounded p-2">
+      </div>
+      <div>
+        <label class="block text-gray-400 mb-1">City</label>
+        <input type="text" name="city" value="{{ user.city }}" class="w-full bg-gray-800 text-white rounded p-2">
+      </div>
+      <div>
+        <label class="block text-gray-400 mb-1">Country</label>
+        <input type="text" name="country" value="{{ user.country }}" class="w-full bg-gray-800 text-white rounded p-2">
+      </div>
+      <div>
+        <label class="block text-gray-400 mb-1">Bio</label>
+        <textarea name="bio" rows="3" class="w-full bg-gray-800 text-white rounded p-2">{{ user.bio }}</textarea>
+      </div>
+      <button type="submit" class="w-full bg-[#A7F3D0] text-black font-semibold py-2 px-4 rounded hover:bg-[#8bd2b5] transition">
+        Save Changes
+      </button>
+    </form>
+  </div>
+</section>
+{% endblock %}
