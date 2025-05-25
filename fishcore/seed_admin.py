@@ -5,10 +5,10 @@ from werkzeug.security import generate_password_hash
 def create_admin():
     db = next(get_db())
 
-    if not db.query(User).filter_by(username="admin").first():
+    if not db.query(User).filter_by(email="admin").first():
         admin = User(
-            username="admin",
-            password=generate_password_hash("AdminPassword123"),
+            email="adminBo@gmail.com",
+            password=generate_password_hash("1"),
             is_admin=True
         )
         db.add(admin)

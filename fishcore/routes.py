@@ -315,3 +315,60 @@ def delete_lesson():
     db.commit()
     flash("Lesson deleted successfully.", "success")
     return redirect(url_for('main.admin_dashboard'))
+
+@main_routes.route('/blog')
+def blog():
+    # Sample static blog entries
+    blog_posts = [
+        {
+            "title": "Perfecting Casting Techniques",
+            "slug": "perfecting-casting-techniques",
+            "date": "Oct 10, 2023",
+            "summary": "Uncover detailed strategies to enhance your casting skills for better fishing outcomes.",
+            "image": url_for('static', filename='images/d3a796d5-e4df-460e-8804-1618d4d018a9.avif')
+        },
+        # Add more blog entries here
+    ]
+    return render_template("blog.html", posts=blog_posts)
+
+
+@main_routes.route('/blog/<slug>')
+def blog_post(slug):
+    # Simulated blog lookup
+    sample_blog = {
+        "perfecting-casting-techniques": {
+            "title": "Perfecting Casting Techniques",
+            "date": "Oct 10, 2023",
+            "image": url_for('static', filename='images/d3a796d5-e4df-460e-8804-1618d4d018a9.avif'),
+            "content": """
+                <p>Casting is one of the most essential skills in fishing...</p>
+                <p>Here are 3 techniques that pros use every time:</p>
+                <ul>
+                    <li>Use your wrist, not your elbow</li>
+                    <li>Keep your eyes on the landing zone</li>
+                    <li>Let the rod do the work</li>
+                </ul>
+            """
+        }
+    }
+
+    post = sample_blog.get(slug)
+    if not post:
+        flash("Blog post not found.", "error")
+        return redirect(url_for('blog'))
+
+    return render_template("blog_post.html", post_title=post['title'],
+                           post_date=post['date'],
+                           post_image=post['image'],
+                           post_content=post['content'])
+
+@main_routes.route('/about')
+def about():
+    return render_template('about.html')
+
+@main_routes.route('/store')
+def store():
+    return render_template('store.html')  # Or a temporary page
+@main_routes.route('/faq')
+def faq():
+    return render_template('faq.html')

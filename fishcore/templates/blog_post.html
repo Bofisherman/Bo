@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post_title }} | BO Fisherman{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container narrow-container">
+    <h1 class="h2-heading">{{ post_title }}</h1>
+    <p class="paragraph-lg utility-text-secondary">{{ post_date }}</p>
+    <img src="{{ post_image }}" alt="{{ post_title }}" class="cover-image utility-margin-top-2rem">
+    <div class="rich-text utility-margin-top-2rem">
+      {{ post_content|safe }}
+    </div>
+  </div>
+</section>
+{% endblock %}

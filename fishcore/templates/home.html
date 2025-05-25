@@ -3,24 +3,17 @@
 {% block title %}Home | BO Fisherman{% endblock %}
 
 {% block content %}
-<section class="section inverse-section">
-  <div class="container">
-    <h1 class="h1-heading">Master fishing with our expert courses</h1>
-    <p class="subheading">Access comprehensive online courses and shop for premium fishing gear.</p>
-    <div class="button-group">
-      <a href="#" class="button primary-button-on-inverse w-button">Enroll now</a>
-      <a href="#" class="button secondary-button secondary-button-on-inverse w-button">Browse gear</a>
-    </div>
-  </div>
-</section>
+  {% include 'hero_section.html' %}
+  {% include 'feature_highlights.html' %}
+  {% include 'course_cards.html' %}
+  {% include 'testimonial_quote.html' %}
+  {% include 'blog_teasers.html' %}
+  {# {% include 'pricing_section.html' %} #}
+  {% include 'faq_section.html' %}
 
-{% include 'course_cards.html' %}
-{% include 'faq_section.html' %}
-{% include 'pricing_section.html' %}
-{% include 'blog_teasers.html' %}
-{% include 'testimonials_section.html' %}
-{% include 'partners_section.html' %}
-{% include 'signup_form.html' %}
-{% include 'contact_cta.html' %}
+  {# {% include 'contact_cta.html' %} #}
+  {% include 'testimonials_section.html' %}
+  {% include 'partners_section.html' %}
+  {% include 'signup_form.html' %}
+     {% include 'contact_locations.html' %}
 {% endblock %}
-

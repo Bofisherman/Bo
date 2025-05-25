@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Blog | BO Fisherman{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container">
+    <h1 class="h2-heading">Fishing Tips & News</h1>
+    <div class="w-layout-grid grid-layout desktop-3-column grid-gap-sm utility-margin-top-2rem">
+
+      {% for post in posts %}
+      <a href="{{ url_for('main.blog_post', slug=post.slug) }}" class="card-link w-inline-block">
+        <img src="{{ post.image }}" alt="{{ post.title }}" class="cover-image card-image">
+        <div class="utility-padding-all-1rem">
+          <p class="tag">{{ post.date }}</p>
+          <h3 class="h4-heading">{{ post.title }}</h3>
+          <p class="paragraph-sm">{{ post.summary }}</p>
+        </div>
+      </a>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+{% endblock %}

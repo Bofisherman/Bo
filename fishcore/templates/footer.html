@@ -1,20 +1,99 @@
 <footer class="footer inverse-footer">
   <div class="container">
-    <div class="grid-layout">
-      <div>
-        <h2 class="h2-heading">Embark on your fishing adventure</h2>
-        <a href="/contact" class="footer-link">Get in touch →</a>
+      <div class="w-layout-grid grid-layout" style="grid-template-columns: 1.2fr 1.2fr 1.2fr 0.3fr; gap: 2rem;">
+
+      <!-- Call to Action (shifted slightly toward center) -->
+      <div id="w-node-call-to-action" style="grid-column: span 1;">
+        <h2 class="h2-heading utility-margin-bottom-0">Embark on your fishing adventure</h2>
+        <a href="{{ url_for('main.contact') }}" class="footer-link footer-link-on-inverse w-inline-block">
+          <div class="h2-heading">Get in touch →</div>
+        </a>
       </div>
-      <div>
-        <p>Call us: 123-456-7890</p>
-        <a href="mailto:support@bofisherman.com" class="footer-link">support@bofisherman.com</a>
-      </div>
-      <ul class="w-list-unstyled">
-        <li><a href="/lessons" class="footer-link">Courses</a></li>
-        <li><a href="/store" class="footer-link">Store</a></li>
-        <li><a href="/about" class="footer-link">About</a></li>
-        <li><a href="/faq" class="footer-link">FAQ</a></li>
+
+      <!-- Contact Info (span 1.5 columns or similar depending on framework) -->
+      <div id="w-node-contact-info" style="font-size: 1.3rem; line-height: 5.0; font-weight: 600;">
+  <div>Call us: +49 01628955210</div>
+  <a href="mailto:captainliangbo@gmail.com" class="footer-link footer-link-on-inverse w-inline-block" style="font-size: 1.3rem;">
+    <div>Email: captainliangbo@gmail.com</div>
+  </a>
+</div>
+
+
+      <!-- Navigation Links (occupying more central space) -->
+      <ul id="w-node-navigation-links"
+          class="grid-layout mobile-portrait-1-column grid-gap-xs w-list-unstyled"
+          style="list-style: none; padding: 0; line-height: 2.4; grid-column: span 1;">
+        <li><a href="{{ url_for('main.lessons') }}" class="footer-link" style="font-size: 1.6rem;">Courses</a></li>
+        <li><a href="{{ url_for('main.store') }}" class="footer-link" style="font-size: 1.6rem;">Store</a></li>
+        <li><a href="{{ url_for('main.blog') }}" class="footer-link" style="font-size: 1.6rem;">Blog</a></li>
+        <li><a href="{{ url_for('main.about') }}" class="footer-link" style="font-size: 1.6rem;">About</a></li>
+        <li><a href="{{ url_for('main.faq') }}" class="footer-link" style="font-size: 1.6rem;">FAQ</a></li>
+        <li><a href="{{ url_for('main.contact') }}" class="footer-link" style="font-size: 1.6rem;">Contact</a></li>
       </ul>
+
+      <!-- Social + Credit -->
+      <div id="w-node-social" class="w-layout-grid grid-layout mobile-portrait-1-column grid-gap-sm" style="grid-column: span 1;">
+        <ul class="footer-icons-group w-list-unstyled" style="display: flex; gap: 1.2rem; padding: 0; list-style: none;">
+  <!-- Facebook -->
+  <li>
+    <a href="#" class="footer-icon-link w-inline-block" aria-label="Facebook">
+      <div class="icon-small on-accent-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M16,8.048a8,8,0,1,0-9.25,7.9V10.36H4.719V8.048H6.75V6.285A2.822,2.822,0,0,1,9.771,3.173a12.2,12.2,0,0,1,1.791.156V5.3H10.554a1.155,1.155,0,0,0-1.3,1.25v1.5h2.219l-.355,2.312H9.25v5.591A8,8,0,0,0,16,8.048Z"/>
+        </svg>
+      </div>
+    </a>
+  </li>
+
+  <!-- Instagram -->
+  <li>
+    <a href="#" class="footer-icon-link w-inline-block" aria-label="Instagram">
+      <div class="icon-small on-accent-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8,0C5.8,0,5.5,0,4.7,0.05C3.9,0.1,3.2,0.3,2.7,0.5C2.2,0.8,1.8,1.2,1.5,1.7C1.3,2.2,1.1,2.9,1,3.7C1,4.5,1,4.8,1,8c0,3.2,0,3.5,0.05,4.3C1.1,13.1,1.3,13.8,1.5,14.3c0.3,0.5,0.7,0.9,1.2,1.2c0.5,0.2,1.2,0.4,2,0.5C4.5,16,4.8,16,8,16c3.2,0,3.5,0,4.3-0.05c0.8-0.1,1.5-0.3,2-0.5c0.5-0.3,0.9-0.7,1.2-1.2c0.2-0.5,0.4-1.2,0.5-2C16,11.5,16,11.2,16,8s0-3.5-0.05-4.3c-0.1-0.8-0.3-1.5-0.5-2c-0.3-0.5-0.7-0.9-1.2-1.2c-0.5-0.2-1.2-0.4-2-0.5C11.5,0,11.2,0,8,0z"/>
+          <circle cx="8" cy="8" r="3.2"/>
+          <circle cx="12.3" cy="3.7" r="0.9"/>
+        </svg>
+      </div>
+    </a>
+  </li>
+
+  <!-- Twitter/X -->
+  <li>
+    <a href="#" class="footer-icon-link w-inline-block" aria-label="Twitter/X">
+      <div class="icon-small on-accent-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M12.37,1.17h2.32l-5.06,5.79l5.96,7.87h-4.66l-3.65-4.78l-4.18,4.78H0.77l5.41-6.19L0.47,1.17h4.78l3.3,4.36L12.37,1.17z"/>
+        </svg>
+      </div>
+    </a>
+  </li>
+
+  <!-- LinkedIn -->
+  <li>
+    <a href="#" class="footer-icon-link w-inline-block" aria-label="LinkedIn">
+      <div class="icon-small on-accent-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M15.3,0H0.7C0.3,0,0,0.3,0,0.7v14.6C0,15.7,0.3,16,0.7,16h14.6c0.4,0,0.7-0.3,0.7-0.7V0.7C16,0.3,15.7,0,15.3,0zM4.7,13.6H2.4V6h2.3V13.6zM3.6,5C2.8,5,2.2,4.3,2.2,3.6S2.8,2.2,3.6,2.2s1.4,0.6,1.4,1.4S4.4,5,3.6,5zM13.6,13.6h-2.3V9.9c0-0.9,0-2-1.2-2c-1.2,0-1.4,1-1.4,2v3.7H6.3V6h2.3v1h0c0.3-0.6,1.1-1.2,2.2-1.2c2.4,0,2.8,1.6,2.8,3.6V13.6z"/>
+        </svg>
+      </div>
+    </a>
+  </li>
+
+  <!-- YouTube -->
+  <li>
+    <a href="#" class="footer-icon-link w-inline-block" aria-label="YouTube">
+      <div class="icon-small on-accent-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M15.8,4.8c-0.2-1.3-0.8-2.2-2.2-2.4C11.4,2,8,2,8,2s-3.4,0-5.6,0.4C1,2.6,0.3,3.5,0.2,4.8C0,6.1,0,8,0,8s0,1.9,0.2,3.2c0.2,1.3,0.8,2.2,2.2,2.4C4.6,14,8,14,8,14s3.4,0,5.6-0.4c1.4-0.3,2-1.1,2.2-2.4C16,9.9,16,8,16,8S16,6.1,15.8,4.8zM6,11V5l5,3L6,11z"/>
+        </svg>
+      </div>
+    </a>
+  </li>
+</ul>
+
+      </div>
+
     </div>
   </div>
 </footer>

@@ -5,15 +5,15 @@ from fishcore.db import get_db
 
 db = next(get_db())
 
-admin_email = "Bo"
+admin_email = "adminBo@gmail.com"
 admin_password = generate_password_hash("1")
 
-existing = db.query(User).filter_by(username=admin_email).first()
+existing = db.query(User).filter_by(email=admin_email).first()
 if existing:
     print("❗ Admin user already exists.")
 else:
     admin_user = User(
-        username=admin_email,
+        email=admin_email,
         password=admin_password,
         is_admin=True
     )
