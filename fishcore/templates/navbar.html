@@ -11,12 +11,22 @@
 
     <div class="nav-right">
       <ul class="nav-menu-list w-list-unstyled">
-        <li><a href="{{ url_for('main.home') }}" class="nav-link">Home</a></li>
-        <li><a href="{{ url_for('main.lessons') }}" class="nav-link">Lessons</a></li>
-        <li><a href="{{ url_for('main.blog') }}" class="nav-link">Blog</a></li>
-        <li><a href="{{ url_for('main.about') }}" class="nav-link">About</a></li>
-        <li><a href="{{ url_for('main.contact') }}" class="nav-link">Contact</a></li>
-      </ul>
+  <li><a href="{{ url_for('main.home') }}" class="nav-link">Home</a></li>
+  <li><a href="{{ url_for('main.lessons') }}" class="nav-link">Lessons</a></li>
+  <li><a href="{{ url_for('main.blog') }}" class="nav-link">Blog</a></li>
+  <li><a href="{{ url_for('main.about') }}" class="nav-link">About</a></li>
+  <li><a href="{{ url_for('main.contact') }}" class="nav-link">Contact</a></li>
+
+  {% if session.user_id %}
+  <li><a href="{{ url_for('main.profile') }}" class="nav-link">Profile</a></li>
+  <li><a href="{{ url_for('main.logout') }}" class="nav-link">Logout</a></li>
+{% else %}
+  <li><a href="{{ url_for('main.login') }}" class="nav-link">Login</a></li>
+  <li><a href="{{ url_for('main.register') }}" class="nav-link">Sign Up</a></li>
+{% endif %}
+</ul>
+
+
     </div>
   </div>
 </nav>

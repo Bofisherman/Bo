@@ -10,7 +10,8 @@ from fishcore.db import get_db
 from fishcore.models import User, Category, Lesson
 from utils.s3_upload import upload_file_to_s3
 import re
-
+from dotenv import load_dotenv
+load_dotenv()
 main_routes = Blueprint('main', __name__)
 
 def allowed_file(filename):
@@ -81,32 +82,46 @@ def login():
 def google_login():
     db = next(get_db())
 
+    # If user not yet authorized, start Google login flow
     if not google.authorized:
         return redirect(url_for("google.login"))
 
+    # Get user info from Google
     resp = google.get("/oauth2/v2/userinfo")
     if not resp.ok:
         flash("Failed to fetch user info from Google.", "error")
-        return redirect("/login")
+        return redirect(url_for("main.login"))
 
     user_info = resp.json()
-    email = user_info["email"]
+    email = user_info.get("email")
+
+    if not email:
+        flash("Google account did not return an email address.", "error")
+        return redirect(url_for("main.login"))
 
     # Check if user already exists
     user = db.query(User).filter_by(username=email).first()
     if not user:
-        # Create a new user
-        user = User(username=email, password=generate_password_hash("google-auth"), is_admin=False)
+        user = User(
+            username=email,
+            password=generate_password_hash("google-oauth-placeholder"),  # prevent password login
+            is_admin=False
+        )
         db.add(user)
         db.commit()
 
-    session['user_id'] = user.id
-    session['username'] = user.username
-    session['is_admin'] = user.is_admin
+    # Log user in by setting session
+    session["user_id"] = user.id
+    session["username"] = user.username
+    session["is_admin"] = user.is_admin
 
     flash("Logged in with Google!", "success")
-    return redirect('/admin/categories' if user.is_admin else '/lessons')
+    return redirect("/admin/categories" if user.is_admin else "/lessons")
 
+@main_routes.route("/login/apple")
+def apple_login():
+    flash("Apple login is not available yet. Coming soon!", "error")
+    return redirect(url_for("main.login"))
 
 @main_routes.route('/logout')
 def logout():
@@ -372,3 +387,7 @@ def store():
 @main_routes.route('/faq')
 def faq():
     return render_template('faq.html')
+@main_routes.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html', user_email=session.get('email'))

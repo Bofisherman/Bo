@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section">
+  <div class="container" style="text-align: center; padding: 4rem 2rem;">
+    <h1 class="h1-heading">Your Profile</h1>
+    <p class="paragraph-lg">Welcome, {{ user_email }}!</p>
+
+    <div style="margin-top: 2rem;">
+      <a href="{{ url_for('main.logout') }}" class="button secondary-button">Logout</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

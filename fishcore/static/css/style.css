@@ -482,3 +482,74 @@ input[type="text"] {
 .btn-danger:hover {
   background-color: #c62828;
 }
+.avatar-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  justify-items: center;
+  align-items: center;
+}
+
+.team-member {
+  text-align: center;
+}
+
+.team-photo {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 20px;
+  display: block;
+  margin: 0 auto 1rem;
+}
+.team-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.team-bio {
+  font-size: 0.95rem;
+  color: #555;
+  max-width: 280px;
+  margin: 0 auto;
+  line-height: 1.4;
+}
+@media screen and (max-width: 768px) {
+  .grid-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .container {
+    padding: 2rem 1rem !important;
+  }
+
+  .h1-heading {
+    font-size: 1.8rem !important;
+    text-align: center !important;
+  }
+
+  .button-group {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+}
+.desktop-3-column {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .desktop-3-column {
+    grid-template-columns: 1fr;
+  }
+}

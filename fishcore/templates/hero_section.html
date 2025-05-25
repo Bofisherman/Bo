@@ -1,25 +1,39 @@
-{# includes/hero_section.html #}
 <header class="section utility-padding-all-0 utility-text-on-overlay inverse-section" style="position: relative; min-height: 100vh;">
   <!-- Background image -->
-  <img src="{{ url_for('static', filename='images/7d19483b-635d-432e-829a-560a245e05e7.avif') }}"
+  <img src="{{ url_for('static', filename='images/home.jpg') }}"
        alt="Fishing lake background"
        class="cover-image utility-position-absolute"
        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;">
 
   <!-- Overlay -->
-  <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: 2;"></div>
+  <div class="overlay"
+       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+              background: rgba(0, 0, 0, 0.4); z-index: 2;"></div>
 
   <!-- Content -->
-  <div class="container" style="position: relative; z-index: 3; padding: 6rem 2rem; color: white;">
-    <div class="w-layout-grid grid-layout desktop-3-column">
+  <div class="container"
+       style="position: relative; z-index: 3; padding: 6rem 2rem; color: white;
+              display: flex; flex-direction: column; justify-content: center; align-items: center;
+              text-align: center;">
+
+    <div class="w-layout-grid grid-layout desktop-3-column"
+         style="display: grid; grid-template-columns: 1fr;
+                gap: 1.5rem; max-width: 800px; width: 100%;">
+
       <div class="flex-vertical flex-gap-xs">
-        <h1 class="h1-heading">Master fishing with our expert courses</h1>
-        <p class="subheading utility-max-width-md">
+        <h1 class="h1-heading" style="font-size: 2.5rem; margin-bottom: 1rem;">
+          Master fishing with our expert courses
+        </h1>
+        <p class="subheading utility-max-width-md"
+           style="font-size: 1.125rem; line-height: 1.6; margin-bottom: 2rem;">
           Access comprehensive online courses and shop for premium fishing gear. Ideal for both beginners and seasoned anglers.
         </p>
-        <div class="button-group">
-          <a href="#" class="button primary-button-on-inverse w-button">Enroll now</a>
-          <a href="#" class="button secondary-button secondary-button-on-inverse w-button">Browse gear</a>
+        <div class="button-group"
+             style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+          <a href="#" class="button primary-button-on-inverse w-button"
+             style="padding: 0.75rem 1.5rem; font-size: 1rem;">Enroll now</a>
+          <a href="#" class="button secondary-button secondary-button-on-inverse w-button"
+             style="padding: 0.75rem 1.5rem; font-size: 1rem;">Browse gear</a>
         </div>
       </div>
     </div>
