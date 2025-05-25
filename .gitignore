@@ -32,9 +32,9 @@ fish_dataset/
 *.h5
 *.pt
 *.onnx
-*.jpg
-*.jpeg
-*.png
+# *.jpg
+# *.jpeg
+
 *.gif
 # Pytest
 .pytest_cache/
