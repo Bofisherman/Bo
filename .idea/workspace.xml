@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="da5e019b-a11d-4fc5-b3c3-bb8c8b98eef6" name="Changes" comment="" />
+    <list default="true" id="da5e019b-a11d-4fc5-b3c3-bb8c8b98eef6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fishcore/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/fishcore/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fishcore/static/images/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/fishcore/static/images/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fishcore/static/images/webclip.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fishcore/static/loading.js" beforeDir="false" afterPath="$PROJECT_DIR$/fishcore/static/js/loading.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fishcore/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/fishcore/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fishcore/templates/hero_section.html" beforeDir="false" afterPath="$PROJECT_DIR$/fishcore/templates/hero_section.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fishcore/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/fishcore/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fishcore/templates/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/fishcore/templates/navbar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fishcore/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/fishcore/templates/register.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,7 +46,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/liangbo/Downloads/fisherman/fishcore/static/images",
+    "last_opened_file_path": "/Users/liangbo/Downloads/fisherman/fishcore/static/js",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -46,21 +57,21 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/fishcore/static/js" />
       <recent name="$PROJECT_DIR$/fishcore/static/images" />
       <recent name="$PROJECT_DIR$/fishcore/templates" />
       <recent name="$PROJECT_DIR$/fishcore/static" />
       <recent name="$PROJECT_DIR$/fishcore" />
-      <recent name="$PROJECT_DIR$/fishproject/fishcore" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/fishcore/static/js" />
       <recent name="$PROJECT_DIR$/fishcore/static/css" />
       <recent name="$PROJECT_DIR$/fishcore" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/utils" />
-      <recent name="$PROJECT_DIR$/fishcore/static/images" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.app">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python">
       <module name="fisherman" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -124,7 +135,7 @@
       <workItem from="1747939902220" duration="6913000" />
       <workItem from="1747954160856" duration="1509000" />
       <workItem from="1747957380407" duration="32585000" />
-      <workItem from="1748137236559" duration="14058000" />
+      <workItem from="1748137236559" duration="18201000" />
     </task>
     <servers />
   </component>
@@ -139,6 +150,6 @@
     <SUITE FILE_PATH="coverage/fisherman$init_db.coverage" NAME="init_db Coverage Results" MODIFIED="1748118763147" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/fishcore" />
     <SUITE FILE_PATH="coverage/fisherman$generate_embeddings.coverage" NAME="generate_embeddings Coverage Results" MODIFIED="1747942389261" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/fisherman$create_admin.coverage" NAME="create_admin Coverage Results" MODIFIED="1748138103413" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/fisherman$app.coverage" NAME="app Coverage Results" MODIFIED="1748182318805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/fisherman$app.coverage" NAME="app Coverage Results" MODIFIED="1748203062183" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

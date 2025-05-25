@@ -553,3 +553,46 @@ input[type="text"] {
     grid-template-columns: 1fr;
   }
 }
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.nav-right {
+  display: flex;
+}
+
+.nav-menu-list {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-toggle {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .nav-menu-list {
+    flex-direction: column;
+    display: none;
+    background: #111;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  .nav-right.active .nav-menu-list {
+    display: flex;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+}

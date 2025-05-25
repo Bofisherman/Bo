@@ -2,43 +2,58 @@
 {% block title %}Login - BO Fisherman{% endblock %}
 
 {% block content %}
-<section class="auth-section" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
-  <div class="auth-form">
-    <h2>Sign In</h2>
+<header class="section utility-padding-all-0 utility-text-on-overlay inverse-section"
+        style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;">
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul class="flashes">
-          {% for category, message in messages %}
-            <li class="alert alert-{{ category }}">{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-<form method="POST" action="{{ url_for('main.login') }}">
-  <input type="email" name="email" placeholder="Email address" required>
-  <input type="password" name="password" placeholder="Password" required>
-  <button type="submit" class="btn-primary">Sign In</button>
-</form>
+  <!-- Background image -->
+  <img src="{{ url_for('static', filename='images/login2.jpg') }}"
+       alt="Fishing background"
+       class="cover-image utility-position-absolute"
+       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+              object-fit: cover; z-index: 1;">
 
-<div class="divider" style="margin: 2rem 0;">OR</div>
+  <!-- Dark overlay -->
+  <div class="overlay"
+       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+              background: rgba(0, 0, 0, 0.5); z-index: 2;"></div>
 
-<a href="{{ url_for('google.login') }}"
-   class="social-btn google-btn"
-   style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 1rem;">
-  <img src="{{ url_for('static', filename='images/google-icon.png') }}" alt="Google" style="width: 20px;">
-  Continue with Google
-</a>
+  <!-- Centered form content -->
+  <div class="container"
+       style="position: relative; z-index: 3; color: white; padding: 2rem; width: 100%;
+              max-width: 400px; display: flex; flex-direction: column; align-items: center; text-align: center;">
 
-<a href="{{ url_for('main.apple_login') }}"
-   class="social-btn apple-btn"
-   style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-  <img src="{{ url_for('static', filename='images/apple-icon.png') }}" alt="Apple" style="width: 20px;">
-  Continue with Apple
-</a>
+    <h2 style="font-size: 2rem; margin-bottom: 1rem;">Sign In</h2>
 
-<p class="signup-link" style="margin-top: 1.5rem;">
-  New to BO Fisherman? <a href="{{ url_for('main.register') }}">Create an account</a>
-</p>
+    <form method="POST" action="{{ url_for('main.login') }}" style="width: 100%; display: flex; flex-direction: column; gap: 1rem;">
+      <input type="email" name="email" placeholder="Email address" required
+             style="padding: 0.75rem; border-radius: 0.5rem; border: none;">
+      <input type="password" name="password" placeholder="Password" required
+             style="padding: 0.75rem; border-radius: 0.5rem; border: none;">
+      <button type="submit"
+              style="padding: 0.75rem; background: #3f704d; color: white; border: none; border-radius: 0.5rem;">
+        Sign In
+      </button>
+    </form>
+
+    <div style="margin: 1.5rem 0; font-weight: bold;">OR</div>
+
+    <a href="{{ url_for('google.login') }}"
+       style="color: white; text-decoration: none; margin-bottom: 0.75rem;">
+      <img src="{{ url_for('static', filename='images/google-icon.png') }}" style="width: 20px; vertical-align: middle; margin-right: 8px;">
+      Continue with Google
+    </a>
+
+    <a href="{{ url_for('main.apple_login') }}"
+       style="color: white; text-decoration: none;">
+      <img src="{{ url_for('static', filename='images/apple-icon.png') }}" style="width: 20px; vertical-align: middle; margin-right: 8px;">
+      Continue with Apple
+    </a>
+
+    <p style="margin-top: 1.5rem;">
+      New to BO Fisherman?
+      <a href="{{ url_for('main.register') }}" style="color: #90ee90;">Create an account</a>
+    </p>
+  </div>
+</header>
 
 {% endblock %}

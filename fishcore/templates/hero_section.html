@@ -28,13 +28,14 @@
            style="font-size: 1.125rem; line-height: 1.6; margin-bottom: 2rem;">
           Access comprehensive online courses and shop for premium fishing gear. Ideal for both beginners and seasoned anglers.
         </p>
-        <div class="button-group"
-             style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
-          <a href="#" class="button primary-button-on-inverse w-button"
-             style="padding: 0.75rem 1.5rem; font-size: 1rem;">Enroll now</a>
-          <a href="#" class="button secondary-button secondary-button-on-inverse w-button"
-             style="padding: 0.75rem 1.5rem; font-size: 1rem;">Browse gear</a>
-        </div>
+      <div class="button-group"
+     style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+  <a href="{{ url_for('main.register') }}" class="button primary-button-on-inverse w-button"
+     style="padding: 0.75rem 1.5rem; font-size: 1rem;">Enroll now</a>
+  <a href="{{ url_for('main.store') }}" class="button secondary-button secondary-button-on-inverse w-button"
+     style="padding: 0.75rem 1.5rem; font-size: 1rem;">Browse gear</a>
+</div>
+
       </div>
     </div>
   </div>
