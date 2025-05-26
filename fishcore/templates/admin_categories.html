@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
-{% block title %}Manage Categories - BO Fisherman{% endblock %}
+{% block title %}Admin - Manage Categories & Lessons{% endblock %}
 
 {% block content %}
 <div class="container">
-  <h1 class="page-title">📂 Manage Lesson Categories</h1>
+  <h1 class="page-title">📂 Admin: Categories & Lessons</h1>
 
-  <!-- Category Creation Form -->
-  <div class="card">
-    <h2>Add New Category</h2>
-    <form method="POST" class="form-grid">
+  <!-- Add Category Form -->
+  <section class="card">
+    <h2>➕ Add New Category</h2>
+    <form method="POST" action="{{ url_for('main.manage_categories') }}" class="form-grid">
       <div class="form-field">
         <label>Name:</label>
         <input type="text" name="name" required>
       </div>
 
       <div class="form-field">
-        <label>Description (optional):</label>
+        <label>Description:</label>
         <input type="text" name="description">
       </div>
 
@@ -24,30 +24,98 @@
         <input type="text" name="icon">
       </div>
 
-      <button type="submit" class="btn-primary">➕ Add Category</button>
+      <button type="submit" class="btn-primary">Add Category</button>
     </form>
-  </div>
+  </section>
 
   <hr>
 
-  <!-- Category List -->
-  <div class="card">
-    <h2>Current Categories</h2>
-    {% if categories %}
-      <ul class="category-list">
-        {% for cat in categories %}
-          <li>
-            <span class="category-icon">{{ cat['icon'] or '📁' }}</span>
-            <div class="category-info">
-              <strong>{{ cat['name'] }}</strong><br>
-              <small>{{ cat['description'] or 'No description' }}</small>
-            </div>
-          </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No categories yet.</p>
-    {% endif %}
-  </div>
+  <!-- Existing Categories -->
+  {% for cat in categories %}
+    <section class="card">
+      <h2>{{ cat.icon or "📁" }} {{ cat.name }}</h2>
+
+      <!-- Edit Category -->
+      <form method="POST" action="{{ url_for('main.edit_category') }}" class="form-grid">
+        <input type="hidden" name="category_id" value="{{ cat.id }}">
+        <input type="text" name="name" value="{{ cat.name }}" required>
+        <input type="text" name="description" value="{{ cat.description or '' }}">
+        <input type="text" name="icon" value="{{ cat.icon or '' }}">
+        <button type="submit" class="btn-secondary">💾 Update</button>
+      </form>
+
+      <!-- Delete Category -->
+      <form method="POST" action="{{ url_for('main.delete_category') }}" style="margin-top: 0.5rem;" onsubmit="return confirm('Delete this category and its lessons?');">
+        <input type="hidden" name="category_id" value="{{ cat.id }}">
+        <button type="submit" class="btn-danger">🗑 Delete Category</button>
+      </form>
+
+      <hr>
+
+      <!-- Upload Lesson -->
+      <h3>🎓 Add Lesson to {{ cat.name }}</h3>
+      <form method="POST" action="{{ url_for('main.upload_lesson') }}" enctype="multipart/form-data" class="form-grid">
+        <input type="hidden" name="category" value="{{ cat.id }}">
+
+        <input type="text" name="title" placeholder="Lesson Title" required>
+        <input type="text" name="description" placeholder="Description" required>
+
+        <select name="media_type" required>
+          <option value="">-- Media Type --</option>
+          <option value="video">Video</option>
+          <option value="image">Image</option>
+          <option value="text">Text</option>
+        </select>
+
+        <input type="file" name="media" accept="video/*,image/*">
+
+        <button type="submit" class="btn-primary">⬆ Upload Lesson</button>
+      </form>
+
+      <!-- Lessons List -->
+      {% if category_lessons[cat.id] %}
+        <details style="margin-top: 1rem;">
+          <summary style="cursor: pointer;">📚 View Lessons ({{ category_lessons[cat.id] | length }})</summary>
+          <div class="lesson-grid" style="margin-top: 1rem;">
+            {% for lesson in category_lessons[cat.id] %}
+              <div class="lesson-card">
+                <form method="POST" action="{{ url_for('main.edit_lesson') }}" enctype="multipart/form-data" class="form-grid">
+                  <input type="hidden" name="lesson_id" value="{{ lesson.id }}">
+                  <input type="text" name="title" value="{{ lesson.title }}" required>
+                  <input type="text" name="description" value="{{ lesson.description }}" required>
+
+                  <select name="media_type">
+                    <option value="video" {% if lesson.media_type == 'video' %}selected{% endif %}>Video</option>
+                    <option value="image" {% if lesson.media_type == 'image' %}selected{% endif %}>Image</option>
+                    <option value="text" {% if lesson.media_type == 'text' %}selected{% endif %}>Text</option>
+                  </select>
+
+                  <label>Replace Media:</label>
+                  <input type="file" name="media" accept="video/*,image/*">
+
+                  {% if lesson.media_type == 'video' %}
+                    <video controls width="100%">
+                      <source src="{{ lesson.media_url }}" type="video/mp4">
+                    </video>
+                  {% elif lesson.media_type == 'image' %}
+                    <img src="{{ lesson.media_url }}" alt="{{ lesson.title }}" style="width:100%; border-radius:8px;">
+                  {% endif %}
+
+                  <button type="submit" class="btn-secondary">💾 Save Lesson</button>
+                </form>
+
+                <form method="POST" action="{{ url_for('main.delete_lesson') }}" onsubmit="return confirm('Delete this lesson?');" style="margin-top: 0.5rem;">
+                  <input type="hidden" name="lesson_id" value="{{ lesson.id }}">
+                  <button type="submit" class="btn-danger">🗑 Delete Lesson</button>
+                </form>
+              </div>
+            {% endfor %}
+          </div>
+        </details>
+      {% else %}
+        <p><em>No lessons added yet.</em></p>
+      {% endif %}
+    </section>
+  {% endfor %}
 </div>
 {% endblock %}

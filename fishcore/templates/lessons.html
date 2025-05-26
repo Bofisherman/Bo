@@ -2,55 +2,58 @@
 {% block title %}Fishing Lessons - BO Fisherman{% endblock %}
 
 {% block content %}
-<div class="container">
-  <h1 class="page-title">🎣 Fishing Lessons</h1>
+<header style="position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
 
-  <!-- Category Buttons -->
-  <div class="category-grid">
-    {% for cat in categories %}
-      <button class="category-card" data-category-id="{{ cat['id'] }}">
-        <div class="progress-circle">✓</div>
-        <div>
-          <h3>{{ cat['name'] }}</h3>
-          <p>{{ cat['description'] or '' }}</p>
-        </div>
-      </button>
-    {% endfor %}
+  <!-- Background Image -->
+  <img src="{{ url_for('static', filename='images/login3.jpg') }}"
+       alt="Fishing background"
+       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+              object-fit: cover; z-index: 1;">
+
+  <!-- Overlay Content -->
+  <div style="position: relative; z-index: 2; width: 100%; max-width: 1000px; padding: 2rem;">
+    <div class="category-grid-overlay">
+      {% for cat in categories %}
+        <button class="category-card" data-category-id="{{ cat.id }}">
+          <h3>{{ cat.name }}</h3>
+        </button>
+      {% endfor %}
+    </div>
+
+    <div id="lesson-viewer" class="lesson-viewer"></div>
   </div>
+</header>
 
-  <!-- Lesson Viewer -->
-  <div id="lesson-viewer" class="lesson-viewer">
-    <p>Select a category to view its lessons.</p>
-  </div>
-</div>
-
+<!-- JS section -->
 <script>
-  const categoryCards = document.querySelectorAll('.category-card');
-  const viewer = document.getElementById('lesson-viewer');
-  const lessonsData = {{ category_lessons | tojson }};
+  document.addEventListener('DOMContentLoaded', () => {
+    const lessonsData = {{ category_lessons | tojson }};
+    const viewer = document.getElementById('lesson-viewer');
+    const categoryCards = document.querySelectorAll('.category-card');
 
-  categoryCards.forEach(card => {
-    card.addEventListener('click', () => {
-      const id = card.dataset.categoryId;
-      const lessons = lessonsData[id];
+    categoryCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.dataset.categoryId;
+        const lessons = lessonsData[id];
 
-      if (!lessons || lessons.length === 0) {
-        viewer.innerHTML = `<p><em>No lessons in this category.</em></p>`;
-        return;
-      }
+        if (!lessons || lessons.length === 0) {
+          viewer.innerHTML = `<p style="color:white;"><em>No lessons in this category yet.</em></p>`;
+          return;
+        }
 
-      const html = lessons.map(lesson => `
-        <div class="lesson-card">
-          <h3>${lesson.title}</h3>
-          <p>${lesson.description}</p>
-          ${lesson.media_type === 'video'
-            ? `<video controls width="100%"><source src="${lesson.media_url}" type="video/mp4"></video>`
-            : `<img src="${lesson.media_url}" alt="${lesson.title}" style="width:100%; border-radius:8px;">`
-          }
-        </div>
-      `).join('');
+        const html = lessons.map(lesson => `
+          <div class="lesson-card">
+            <h3>${lesson.title}</h3>
+            <p>${lesson.description}</p>
+            ${lesson.media_type === 'video'
+              ? `<video controls width="100%"><source src="${lesson.media_url}" type="video/mp4"></video>`
+              : `<img src="${lesson.media_url}" alt="${lesson.title}" style="width:100%; border-radius:8px;">`
+            }
+          </div>
+        `).join('');
 
-      viewer.innerHTML = `<div class="lesson-grid">${html}</div>`;
+        viewer.innerHTML = `<div class="lesson-grid">${html}</div>`;
+      });
     });
   });
 </script>

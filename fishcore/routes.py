@@ -139,16 +139,28 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 @main_routes.route('/lessons')
 @login_required
 def lessons():
     db = next(get_db())
     categories = db.query(Category).order_by(Category.display_order, Category.name).all()
-    category_lessons = {
-        cat.id: db.query(Lesson).filter_by(category_id=cat.id).all() for cat in categories
-    }
-    return render_template('lessons.html', categories=categories, category_lessons=category_lessons)
 
+    category_lessons = {
+        cat.id: [
+            {
+                "id": lesson.id,
+                "title": lesson.title,
+                "description": lesson.description,
+                "media_type": lesson.media_type,
+                "media_url": lesson.media_url
+            }
+            for lesson in db.query(Lesson).filter_by(category_id=cat.id).all()
+        ]
+        for cat in categories
+    }
+
+    return render_template('lessons.html', categories=categories, category_lessons=category_lessons)
 @main_routes.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
@@ -207,7 +219,7 @@ def upload_lesson():
                 return redirect('/admin/upload')
 
             lesson = Lesson(title=title, description=description, media_type=media_type,
-                            media_url=media_url, category_id=category_id, uploaded_by=session['username'])
+                            media_url=media_url, category_id=category_id, uploaded_by=session['email'])
             db.add(lesson)
             db.commit()
             flash("Lesson uploaded successfully.", "success")
@@ -232,8 +244,11 @@ def manage_categories():
         flash("Category added successfully.", "success")
 
     categories = db.query(Category).order_by(Category.display_order, Category.id).all()
-    return render_template('admin_categories.html', categories=categories)
-
+    category_lessons = {
+        cat.id: db.query(Lesson).filter_by(category_id=cat.id).order_by(Lesson.created_at.desc()).all()
+        for cat in categories
+    }
+    return render_template('admin_categories.html', categories=categories, category_lessons=category_lessons)
 @main_routes.route('/admin/dashboard')
 @admin_required
 def admin_dashboard():

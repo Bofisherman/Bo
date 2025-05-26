@@ -163,11 +163,11 @@ nav ul li {
 }
 
 .lesson-card {
-  border: 1px solid #ccc;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.92);  /* translucent white for better contrast */
+  color: black;                            /* dark text for visibility */
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 .category-section {
   margin-bottom: 40px;
@@ -178,15 +178,14 @@ nav ul li {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
 }
-
 .lesson-card {
-  background: #fff;
-  border: 1px solid #ddd;
+  background: rgba(255, 255, 255, 0.92);  /* translucent white for better contrast */
+  color: #111;                            /* dark text for visibility */
   border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+
 
 .lesson-card:hover {
   transform: translateY(-3px);
@@ -303,21 +302,18 @@ nav ul li {
 }
 
 .category-card {
-  background: #f0f4f8;
-  border: none;
+  background: rgba(255, 255, 255, 0.9); /* more readable than #f0f4f8 */
+  color: #111;                          /* dark gray text */
   padding: 1rem;
   border-radius: 10px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  display: block;
   transition: background 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-
 .category-card:hover {
-  background-color: #e0f7fa;
+  background: rgba(255, 255, 255, 0.95);
 }
-
 .progress-circle {
   background-color: #4caf50;
   color: white;
@@ -388,21 +384,31 @@ nav ul li {
 }
 
 .lesson-viewer {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .lesson-grid {
   display: grid;
-  gap: 1.5rem;
+  gap: 5rem;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .lesson-card {
-  background: white;
-  border-radius: 10px;
+  background: transparent ;
+  border-radius: 20px;
   padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 2px rgba(0,0,0,0.1);
 }
+.lesson-card video {
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  box-shadow: none;
+  outline: none;
+  max-width: 100%;
+  height: auto;
+}
+
 .container {
   max-width: 900px;
   margin: auto;
@@ -470,6 +476,77 @@ input[type="text"] {
 
 .category-info small {
   color: #666;
+}
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.category-card {
+  background: #558a66;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background 0.2s ease;
+  text-align: left;
+  min-width: 180px; /* for horizontal layout */
+}
+
+.category-card:hover {
+  background-color: darkolivegreen;
+}
+
+.category-circle {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.category-text h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2d2d2d;
+}
+
+.category-text p {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+  color: #666;
+}
+.category-wrapper {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: darkolivegreen;
+  border-radius: 20px;
+  padding: 2rem;
+}
+.category-grid-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.category-image img {
+  max-width: 400px;
+  border-radius: 20px;
+  object-fit: cover;
 }
 .btn-danger {
   background-color: #e53935;
@@ -553,6 +630,7 @@ input[type="text"] {
     grid-template-columns: 1fr;
   }
 }
+/* Default desktop styles */
 .nav-container {
   display: flex;
   justify-content: space-between;
@@ -568,52 +646,139 @@ input[type="text"] {
 
 .nav-right {
   display: flex;
-}
-
-.nav-menu-list {
-  display: flex;
+  align-items: center;
   gap: 1rem;
 }
 
+/* Hamburger icon always visible, aligned to right */
 .nav-toggle {
-  display: none;
+  display: block;
   font-size: 1.8rem;
   cursor: pointer;
+  color: white;
+  z-index: 1000;
 }
 
-@media (max-width: 768px) {
-  .nav-right {
+/* Menu hidden by default */
+.nav-menu-list {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  background: #111;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+/* Menu visible when active */
+.nav-menu-list.active {
+  display: flex;
+}
+
+/* Optional horizontal layout on wide screens */
+@media (min-width: 769px) {
+  .nav-menu-list {
+    flex-direction: row;
     position: absolute;
     top: 60px;
     right: 10px;
   }
+}
 
-  .nav-menu-list {
-    flex-direction: column;
-    display: none;
-    background: #111;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    width: 180px;
-  }
 
-  .nav-menu-list.active {
-    display: flex;
-  }
+.auth-form input {
+  background-color: #fff;   /* ensure visible background */
+  color: #222 !important;   /* dark text for contrast */
+}
 
-  .nav-right {
-    flex-direction: column;
-  }
+.auth-form input::placeholder {
+  color: #888;              /* lighter placeholder */
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  color: #222 !important;              /* dark gray text */
+  background-color: #fff !important;   /* white background */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
 
-  .nav-toggle {
-    display: block;
-    position: absolute;
-    right: 1rem;
-    top: 1.2rem;
-    z-index: 1000;
-    background: none;
-    border: none;
-    color: white;
+input::placeholder {
+  color: #888 !important;              /* softer placeholder */
+}.nav-toggle {
+  display: block;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: white;
+  z-index: 1001;
+  background: none;
+  border: none;
+}
+
+/* Force menu to be hidden by default */
+#navMenu {
+  display: none !important;
+  flex-direction: column;
+  background: #111;
+  padding: 1rem;
+  border-radius: 8px;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  z-index: 1000;
+}
+
+/* When active, show it as flex */
+#navMenu.active {
+  display: flex !important;
+}
+
+/* Optional: horizontal layout for desktop */
+@media screen and (min-width: 768px) {
+  #navMenu {
+    flex-direction: row;
   }
+}
+.flashes {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: auto;
+  max-width: 90%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alert {
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1rem;
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.8); /* semi-transparent */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom coloring */
+.alert-error {
+  color: darkred;
+  background: floralwhite;
+  border: floralwhite;
+}
+
+.alert-success {
+  color: #2e7d32;
+  background: rgba(230, 255, 230, 0.9);
+  border: whitesmoke;
 }

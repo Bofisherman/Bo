@@ -11,7 +11,7 @@
   <script src="https://unpkg.com/flowbite@1.6.4/dist/flowbite.min.js"></script>
 <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
 
-<script src="{{ url_for('static', filename='js/webflow.js') }}"></script>
+ <script src="{{ url_for('static', filename='js/webflow.js') }}"></script>
   <link href="https://unpkg.com/flowbite@1.6.4/dist/flowbite.min.css" rel="stylesheet" />
   <link href="{{ url_for('static', filename='css/normalize.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/webflow.css') }}" rel="stylesheet">
@@ -52,18 +52,46 @@
 
   <!-- 🔧 Place toggleMenu here at the end -->
   <script>
-    function toggleMenu() {
+  function toggleMenu() {
+    const menu = document.getElementById('navMenu');
+    const toggle = document.getElementById('navToggle');
+
+    menu.classList.toggle('active');
+    toggle.textContent = menu.classList.contains('active') ? '←' : '☰';
+  }
+</script>
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById('navMenu');
+    const toggle = document.getElementById('navToggle');
+
+    const isOpen = menu.classList.contains('active');
+    menu.classList.toggle('active');
+    toggle.textContent = isOpen ? '☰' : '←';
+  }
+
+  // Auto close menu when a link is clicked
+  document.querySelectorAll('#navMenu a').forEach(link => {
+    link.addEventListener('click', () => {
       const menu = document.getElementById('navMenu');
       const toggle = document.getElementById('navToggle');
+      menu.classList.remove('active');
+      toggle.textContent = '☰';
+    });
+  });
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const alerts = document.querySelectorAll('.flashes .alert');
+    alerts.forEach(alert => {
+      setTimeout(() => {
+        alert.style.opacity = '0';
+        alert.style.transform = 'translateY(-10px)';
+        setTimeout(() => alert.remove(), 500); // cleanup
+      }, 3000); // 3 seconds
+    });
+  });
+</script>
 
-      if (menu.classList.contains('active')) {
-        menu.classList.remove('active');
-        toggle.textContent = '☰'; // hamburger icon
-      } else {
-        menu.classList.add('active');
-        toggle.textContent = '←'; // back arrow icon
-      }
-    }
-  </script>
 </body>
 </html>

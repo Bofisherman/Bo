@@ -3,7 +3,7 @@ import os
 from botocore.exceptions import NoCredentialsError
 from dotenv import load_dotenv
 
-load_dotenv()  # Load from .env
+load_dotenv()
 
 AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
@@ -18,17 +18,24 @@ s3 = boto3.client('s3',
 def upload_file_to_s3(file_obj, filename, folder="uploads", public=True):
     try:
         s3_path = f"{folder}/{filename}"
+
+        extra_args = {
+            "ContentType": file_obj.content_type
+        }
+
+        # Don't include ACL if bucket has ACLs disabled
+        # If you want to control access, use a bucket policy or signed URLs
         s3.upload_fileobj(
             file_obj,
             BUCKET_NAME,
             s3_path,
-            ExtraArgs={
-                "ACL": "public-read" if public else "private",
-                "ContentType": file_obj.content_type
-            }
+            ExtraArgs=extra_args
         )
+
+        # This assumes bucket policy allows public read
         url = f"https://{BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com/{s3_path}"
         return url
+
     except NoCredentialsError:
         raise Exception("S3 credentials not found")
     except Exception as e:
