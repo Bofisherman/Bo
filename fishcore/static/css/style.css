@@ -549,7 +549,7 @@ input[type="text"] {
   object-fit: cover;
 }
 .btn-danger {
-  background-color: #e53935;
+  background-color: black;
   color: white;
   border: none;
   padding: 0.4rem 1rem;
@@ -557,7 +557,7 @@ input[type="text"] {
   cursor: pointer;
 }
 .btn-danger:hover {
-  background-color: #c62828;
+  background-color: black;
 }
 .avatar-icon {
   width: 24px;
@@ -781,4 +781,9 @@ input::placeholder {
   color: #2e7d32;
   background: rgba(230, 255, 230, 0.9);
   border: whitesmoke;
+}
+.profile-frame {
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
 }
