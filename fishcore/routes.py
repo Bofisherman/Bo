@@ -227,7 +227,7 @@ def upload_lesson():
             flash("Invalid file or missing input.", "error")
 
     categories = db.query(Category).order_by(Category.display_order, Category.name).all()
-    return render_template('admin_upload.html', categories=categories)
+    return render_template('admin_categories.html', categories=categories)
 
 @main_routes.route('/admin/categories', methods=['GET', 'POST'])
 @admin_required
@@ -258,7 +258,7 @@ def admin_dashboard():
         cat.id: db.query(Lesson).filter_by(category_id=cat.id).order_by(Lesson.created_at.desc()).all()
         for cat in categories
     }
-    return render_template('admin_dashboard.html', categories=categories, category_lessons=category_lessons)
+    return render_template('admin_categories.html', categories=categories, category_lessons=category_lessons)
 
 @main_routes.route('/admin/category/edit', methods=['POST'])
 @admin_required
@@ -276,7 +276,7 @@ def edit_category():
         category.icon = icon
         db.commit()
         flash("Category updated successfully.", "success")
-    return redirect(url_for('main.admin_dashboard'))
+    return redirect(url_for('main.admin_categories'))
 
 @main_routes.route('/admin/lesson/edit', methods=['POST'])
 @admin_required
@@ -291,7 +291,7 @@ def edit_lesson():
     lesson = db.query(Lesson).get(lesson_id)
     if not lesson:
         flash("Lesson not found.", "error")
-        return redirect(url_for('main.admin_dashboard'))
+        return redirect(url_for('main.admin_categories'))
 
     lesson.title = title
     lesson.description = description
@@ -305,11 +305,11 @@ def edit_lesson():
             lesson.media_url = media_url
         except Exception as e:
             flash(f"Upload failed: {e}", "error")
-            return redirect(url_for('main.admin_dashboard'))
+            return redirect(url_for('main.admin_categories'))
 
     db.commit()
     flash("Lesson updated successfully.", "success")
-    return redirect(url_for('main.admin_dashboard'))
+    return redirect(url_for('main.admin_categories'))
 
 @main_routes.route('/identify', methods=['GET', 'POST'])
 def identify_fish():
@@ -336,7 +336,7 @@ def delete_category():
     db.query(Category).filter_by(id=category_id).delete()
     db.commit()
     flash("Category and all related lessons deleted.", "success")
-    return redirect(url_for('main.admin_dashboard'))
+    return redirect(url_for('main.admin_categories'))
 
 @main_routes.route('/admin/lesson/delete', methods=['POST'])
 @admin_required
@@ -346,7 +346,7 @@ def delete_lesson():
     db.query(Lesson).filter_by(id=lesson_id).delete()
     db.commit()
     flash("Lesson deleted successfully.", "success")
-    return redirect(url_for('main.admin_dashboard'))
+    return redirect(url_for('main.admin_categories'))
 
 @main_routes.route('/blog')
 def blog():
