@@ -8,18 +8,30 @@ itsdangerous==2.2.0
 Jinja2==3.1.6
 MarkupSafe==3.0.2
 Werkzeug==3.1.3
-gunicorn
-sqlalchemy
-# Image handling
-Pillow
-psycopg2-binary
-# ML/AI
-torch
-torchvision
-torchaudio
-scikit-learn
-numpy<2
-flask-dance
-boto3
 
-python-dotenv
+gunicorn==21.2.0
+SQLAlchemy==2.0.29
+
+# Image handling
+Pillow==10.3.0
+
+psycopg2-binary==2.9.9
+
+# ML/AI
+torch==2.2.2
+torchvision==0.17.2
+torchaudio==2.2.2
+scikit-learn==1.4.2
+numpy<2
+
+# OAuth
+flask-dance==7.0.0
+
+# AWS
+boto3==1.34.106
+
+# JWT
+PyJWT>=2.0.0
+
+# Env loading
+python-dotenv==1.0.1
