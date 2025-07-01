@@ -12,6 +12,9 @@ from utils.s3_upload import upload_file_to_s3
 import re
 from dotenv import load_dotenv
 import os
+from utils.email_utils import send_email
+import jwt
+import datetime
 
 load_dotenv()
 main_routes = Blueprint('main', __name__)
@@ -22,6 +25,35 @@ def allowed_file(filename):
 @main_routes.route('/')
 def home():
     return render_template("home.html", lessons=lessons)
+
+
+@main_routes.route('/verify')
+def verify_email():
+    db = next(get_db())
+    token = request.args.get('token')
+
+    try:
+        data = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
+        user = db.query(User).filter_by(id=data["user_id"]).first()
+
+        if not user:
+            flash("Invalid verification link.", "error")
+            return redirect('/login')
+
+        if user.verified:
+            flash("Account already verified. You can log in.", "info")
+            return redirect('/login')
+
+        user.verified = True
+        db.commit()
+        flash("Email verified successfully! You can now log in.", "success")
+
+    except jwt.ExpiredSignatureError:
+        flash("Verification link expired. Please register again.", "error")
+    except jwt.InvalidTokenError:
+        flash("Invalid verification token.", "error")
+
+    return redirect('/login')
 
 @main_routes.route('/register', methods=['GET', 'POST'])
 def register():
@@ -44,10 +76,45 @@ def register():
         db.add(new_user)
         db.commit()
 
-        flash("Registered successfully. You can now log in.", "success")
+        token = jwt.encode(
+            {
+                "user_id": new_user.id,
+                "exp": datetime.datetime.utcnow() + datetime.timedelta(days=1)
+            },
+            current_app.config["SECRET_KEY"],
+            algorithm="HS256"
+        )
+
+        verify_link = url_for(
+            'main.verify_email',
+            token=token,
+            _external=True,
+            _scheme='https'
+        )
+        html_body = f"""
+        <table style="width:100%; max-width:600px; margin:0 auto; border:1px solid #eee; font-family:sans-serif;">
+          <tr><td style="background-color:#1a73e8; color:white; padding:20px; text-align:center;">
+            <h2>Bofisherman</h2></td></tr>
+          <tr><td style="padding:20px;">
+            <p>Hi {new_user.email},</p>
+            <p>Thank you for registering! Please verify your email by clicking the button below:</p>
+            <p style="text-align:center;">
+              <a href="{verify_link}" style="background-color:#1a73e8; color:white; text-decoration:none; padding:10px 20px; border-radius:5px;">Verify Email</a>
+            </p>
+            <p>If you didn't register, you can ignore this email.</p>
+          </td></tr>
+          <tr><td style="background-color:#f5f5f5; text-align:center; padding:10px; font-size:12px; color:#888;">© 2025 Bofisherman. All rights reserved.</td></tr>
+        </table>
+        """
+
+        send_email(new_user.email, "Verify your Bofisherman Account", html_body)
+
+        flash("Registration received! Please check your email to verify your account before you can log in.", "success")
         return redirect('/login')
 
     return render_template('register.html')
+
+
 
 
 @main_routes.route('/debug_session')
@@ -58,6 +125,8 @@ from flask_dance.contrib.google import google
 from fishcore.models import User
 from fishcore.db import get_db
 from werkzeug.security import generate_password_hash
+
+
 
 @main_routes.route('/login', methods=['GET', 'POST'])
 def login():
@@ -70,16 +139,21 @@ def login():
         user = db.query(User).filter_by(email=email).first()
 
         if user and check_password_hash(user.password, password_input):
+            if not user.verified:
+                flash("Your account is not verified yet. Please check your email for the verification link.", "error")
+                return redirect('/login')
+
             session['user_id'] = user.id
             session['email'] = user.email
             session['is_admin'] = user.is_admin
             flash("Welcome back!", "success")
             return redirect('/admin/categories' if user.is_admin else '/lessons')
 
-        flash("Invalid email or password", "error")
+        flash("Invalid email or password.", "error")
         return redirect('/login')
 
     return render_template('login.html')
+
 @main_routes.route("/login/google")
 def google_login():
     db = next(get_db())
