@@ -3,17 +3,27 @@
 {% block title %}Home | BO Fisherman{% endblock %}
 
 {% block content %}
-  {% include 'hero_section.html' %}
-  {% include 'feature_highlights.html' %}
-  {% include 'course_cards.html' %}
-  {% include 'testimonial_quote.html' %}
-  {% include 'blog_teasers.html' %}
-    {% include 'pricing_section.html' %}
-  {% include 'faq_section.html' %}
+{% include 'hero_section.html' %}
 
-  {# {% include 'contact_cta.html' %} #}
-  {% include 'testimonials_section.html' %}
-  {% include 'partners_section.html' %}
-  {% include 'signup_form.html' %}
-     {% include 'contact_locations.html' %}
+<!-- Features / Value Prop -->
+{% include 'feature_highlights.html' %}
+
+<!-- Main Offering -->
+{% include 'course_cards.html' %}
+
+<!-- Social Proof -->
+{% include 'testimonial_quote.html' %}
+
+<!-- Content Marketing -->
+{% include 'blog_teasers.html' %}
+
+<!-- Pricing -->
+{# {% include 'pricing_section.html' %} #}
+<!-- Hiding pricing for now to focus on value first, or can refactor later -->
+
+<!-- FAQ -->
+{% include 'faq_section.html' %}
+
+<!-- Final CTA -->
+{% include 'signup_form.html' %}
 {% endblock %}

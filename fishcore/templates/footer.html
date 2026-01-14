@@ -1,99 +1,77 @@
-<footer class="footer inverse-footer">
-  <div class="container">
-      <div class="w-layout-grid grid-layout" style="grid-template-columns: 1.2fr 1.2fr 1.2fr 0.3fr;  gap: 5rem;">
+<footer class="bg-slate-900 text-slate-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
 
-      <!-- Call to Action (shifted slightly toward center) -->
-      <div id="w-node-call-to-action" style="grid-column: span 1;">
-        <h2 class="h2-heading utility-margin-bottom-0">Embark on your fishing adventure</h2>
-        <a href="{{ url_for('main.contact') }}" class="footer-link footer-link-on-inverse w-inline-block">
-          <div class="h2-heading">Get in touch →</div>
-        </a>
+      <!-- Brand & Mission -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <img class="h-8 w-auto brightness-0 invert" src="{{ url_for('static', filename='images/logo.png') }}"
+            alt="BO Fisherman">
+          <span class="font-heading font-bold text-lg text-white">BO Fisherman</span>
+        </div>
+        <p class="text-sm leading-relaxed text-slate-400">
+          Embark on your fishing adventure with premium education and gear. Connecting anglers with nature, one cast at
+          a time.
+        </p>
+        <!-- Social Links -->
+        <div class="flex space-x-4 pt-2">
+          <a href="https://instagram.com/bofishermann" class="text-slate-400 hover:text-white transition-colors">
+            <span class="sr-only">Instagram</span>
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd"
+                d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.468 2.9c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                clip-rule="evenodd" />
+            </svg>
+          </a>
+        </div>
       </div>
 
-      <!-- Contact Info (span 1.5 columns or similar depending on framework) -->
-
-      <div id="w-node-contact-info" style="margin-top: 8rem;font-size: 1.0rem; line-height: 2.0; font-weight: 500;">
-  <div>Call us: +49 01628955210</div>
-  <a href="mailto:captainliangbo@gmail.com" class="footer-link footer-link-on-inverse w-inline-block" style="font-size: 1.3rem;">
-    <div>Email: captainliangbo@gmail.com</div>
-  </a>
-</div>
-
-
-      <!-- Navigation Links (occupying more central space) -->
-      <ul id="w-node-navigation-links"
-          class="grid-layout mobile-portrait-1-column grid-gap-xs w-list-unstyled"
-          style="list-style: none; padding: 0; line-height: 2.4; grid-column: span 1;">
-        <li><a href="{{ url_for('main.lessons') }}" class="footer-link" style="font-size: 1.6rem;">Courses</a></li>
-        <li><a href="{{ url_for('main.store') }}" class="footer-link" style="font-size: 1.6rem;">Store</a></li>
-        <li><a href="{{ url_for('main.blog') }}" class="footer-link" style="font-size: 1.6rem;">Blog</a></li>
-        <li><a href="{{ url_for('main.about') }}" class="footer-link" style="font-size: 1.6rem;">About</a></li>
-        <li><a href="{{ url_for('main.faq') }}" class="footer-link" style="font-size: 1.6rem;">FAQ</a></li>
-        <li><a href="{{ url_for('main.contact') }}" class="footer-link" style="font-size: 1.6rem;">Contact</a></li>
-      </ul>
-
-      <!-- Social + Credit -->
-      <div id="w-node-social" class="w-layout-grid grid-layout mobile-portrait-1-column grid-gap-sm" style="grid-column: span 1;">
-        <ul class="footer-icons-group w-list-unstyled" style="display: flex; gap: 1.2rem; padding: 0; list-style: none;">
-  <!-- Facebook -->
-  <li>
-    <a href="#" class="footer-icon-link w-inline-block" aria-label="Facebook">
-      <div class="icon-small on-accent-icon">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M16,8.048a8,8,0,1,0-9.25,7.9V10.36H4.719V8.048H6.75V6.285A2.822,2.822,0,0,1,9.771,3.173a12.2,12.2,0,0,1,1.791.156V5.3H10.554a1.155,1.155,0,0,0-1.3,1.25v1.5h2.219l-.355,2.312H9.25v5.591A8,8,0,0,0,16,8.048Z"/>
-        </svg>
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-sm font-semibold text-white tracking-wider uppercase mb-4">Explore</h3>
+        <ul class="space-y-3">
+          <li><a href="{{ url_for('main.lessons') }}"
+              class="text-base text-slate-400 hover:text-white transition-colors">Courses</a></li>
+          <li><a href="{{ url_for('main.store') }}"
+              class="text-base text-slate-400 hover:text-white transition-colors">Store</a></li>
+          <li><a href="{{ url_for('main.blog') }}"
+              class="text-base text-slate-400 hover:text-white transition-colors">Blog</a></li>
+          <li><a href="{{ url_for('main.about') }}"
+              class="text-base text-slate-400 hover:text-white transition-colors">About Us</a></li>
+        </ul>
       </div>
-    </a>
-  </li>
 
-  <!-- Instagram -->
-  <li>
-  <a href="https://instagram.com/bofishermann" class="footer-icon-link w-inline-block" target="_blank" rel="noopener" aria-label="Instagram">
-    <div class="icon-small on-accent-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 448 512">
-        <path d="M224,202.66A53.34,53.34,0,1,0,277.34,256,53.38,53.38,0,0,0,224,202.66Zm124.71-41a54,54,0,0,0-30.17-30.17C296.46,124.88,256,124.19,224,124.19s-72.46.69-94.54,7.3A54,54,0,0,0,99.29,161.66C92.68,183.75,92,224.22,92,256.19s.68,72.44,7.29,94.53a54,54,0,0,0,30.17,30.17c22.08,6.61,62.55,7.3,94.53,7.3s72.44-.69,94.53-7.3a54,54,0,0,0,30.17-30.17c6.61-22.09,7.3-62.55,7.3-94.53S354.32,183.75,348.71,161.66ZM224,338.85A82.85,82.85,0,1,1,306.85,256,82.94,82.94,0,0,1,224,338.85ZM370.5,151.47A19.48,19.48,0,1,1,351,132,19.52,19.52,0,0,1,370.5,151.47Zm76.35-151.47H1.15A1.15,1.15,0,0,0,0,1.15V510.85A1.15,1.15,0,0,0,1.15,512H510.85A1.15,1.15,0,0,0,512,510.85V1.15A1.15,1.15,0,0,0,510.85,0ZM448,256.19c0,74.78-1.48,132.25-8.38,162.87-6.48,27.54-25.4,46.46-52.94,52.94C356.26,478.52,298.79,480,224,480s-132.25-1.48-162.87-8.38c-27.54-6.48-46.46-25.4-52.94-52.94C67.48,388.44,66,330.97,66,256.19S67.48,123.94,74.39,93.32c6.48-27.54,25.4-46.46,52.94-52.94C91.75,67.48,149.22,66,224,66s132.25,1.48,162.87,8.38c27.54,6.48,46.46,25.4,52.94,52.94C446.52,123.94,448,181.41,448,256.19Z"/>
-      </svg>
+      <!-- Support -->
+      <div>
+        <h3 class="text-sm font-semibold text-white tracking-wider uppercase mb-4">Support</h3>
+        <ul class="space-y-3">
+          <li><a href="{{ url_for('main.faq') }}"
+              class="text-base text-slate-400 hover:text-white transition-colors">FAQ</a></li>
+          <li><a href="{{ url_for('main.contact') }}"
+              class="text-base text-slate-400 hover:text-white transition-colors">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact/CTA -->
+      <div>
+        <h3 class="text-sm font-semibold text-white tracking-wider uppercase mb-4">Get in Touch</h3>
+        <p class="text-sm text-slate-400 mb-2">Have questions? We're here to help.</p>
+        <a href="mailto:captainliangbo@gmail.com"
+          class="text-brand-400 hover:text-brand-300 font-medium break-all">captainliangbo@gmail.com</a>
+        <div class="mt-4">
+          <p class="text-sm text-slate-400">Call us: +49 01628955210</p>
+        </div>
+      </div>
     </div>
-  </a>
-</li>
 
-
-  <!-- Twitter/X -->
-  <li>
-    <a href="#" class="footer-icon-link w-inline-block" aria-label="Twitter/X">
-      <div class="icon-small on-accent-icon">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M12.37,1.17h2.32l-5.06,5.79l5.96,7.87h-4.66l-3.65-4.78l-4.18,4.78H0.77l5.41-6.19L0.47,1.17h4.78l3.3,4.36L12.37,1.17z"/>
-        </svg>
+    <div class="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-sm text-slate-500 text-center md:text-left">
+        &copy; {{ now.year if now else '2025' }} BO Fisherman. All rights reserved.
+      </p>
+      <div class="flex space-x-6 text-sm text-slate-500">
+        <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+        <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
       </div>
-    </a>
-  </li>
-
-  <!-- LinkedIn -->
-  <li>
-    <a href="#" class="footer-icon-link w-inline-block" aria-label="LinkedIn">
-      <div class="icon-small on-accent-icon">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M15.3,0H0.7C0.3,0,0,0.3,0,0.7v14.6C0,15.7,0.3,16,0.7,16h14.6c0.4,0,0.7-0.3,0.7-0.7V0.7C16,0.3,15.7,0,15.3,0zM4.7,13.6H2.4V6h2.3V13.6zM3.6,5C2.8,5,2.2,4.3,2.2,3.6S2.8,2.2,3.6,2.2s1.4,0.6,1.4,1.4S4.4,5,3.6,5zM13.6,13.6h-2.3V9.9c0-0.9,0-2-1.2-2c-1.2,0-1.4,1-1.4,2v3.7H6.3V6h2.3v1h0c0.3-0.6,1.1-1.2,2.2-1.2c2.4,0,2.8,1.6,2.8,3.6V13.6z"/>
-        </svg>
-      </div>
-    </a>
-  </li>
-
-  <!-- YouTube -->
-  <li>
-    <a href="#" class="footer-icon-link w-inline-block" aria-label="YouTube">
-      <div class="icon-small on-accent-icon">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M15.8,4.8c-0.2-1.3-0.8-2.2-2.2-2.4C11.4,2,8,2,8,2s-3.4,0-5.6,0.4C1,2.6,0.3,3.5,0.2,4.8C0,6.1,0,8,0,8s0,1.9,0.2,3.2c0.2,1.3,0.8,2.2,2.2,2.4C4.6,14,8,14,8,14s3.4,0,5.6-0.4c1.4-0.3,2-1.1,2.2-2.4C16,9.9,16,8,16,8S16,6.1,15.8,4.8zM6,11V5l5,3L6,11z"/>
-        </svg>
-      </div>
-    </a>
-  </li>
-</ul>
-
-      </div>
-
     </div>
   </div>
 </footer>

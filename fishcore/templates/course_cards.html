@@ -1,25 +1,99 @@
-<section class="section">
-  <div class="container">
-    <div class="grid-layout">
-      <div class="card">
-        <div class="card-body">
-          <h3 class="h4-heading">Key course features</h3>
-          <p>Access in-depth tutorials and practical advice to refine your fishing skills.</p>
+<section class="py-20 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <span class="text-brand-600 font-semibold tracking-wide uppercase text-sm">Our Education</span>
+      <h2 class="text-3xl md:text-4xl font-heading font-bold text-slate-900 mt-2">Popular Fishing Courses</h2>
+      <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">From basics to pro techniques, find the perfect path for
+        your angling journey.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Course 1 -->
+      <div
+        class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col">
+        <div class="h-48 bg-slate-200 relative group overflow-hidden">
+          <!-- Placeholder or abstract gradient if image missing -->
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-300 group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <div
+            class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-slate-800">
+            Beginner</div>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <h3 class="text-xl font-bold text-slate-900 mb-2">Bass Fishing Basics</h3>
+          <p class="text-slate-600 text-sm mb-4 flex-1">Master the fundamentals of finding and catching bass in any
+            season.</p>
+          <div class="mt-auto pt-4 border-t border-slate-100 flex justify-between items-center">
+            <span class="text-slate-900 font-bold">$49.99</span>
+            <a href="{{ url_for('main.lessons') }}"
+              class="text-brand-600 hover:text-brand-700 font-medium text-sm flex items-center">
+              View Details <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-body">
-          <h3 class="h4-heading">Premium equipment</h3>
-          <p>Explore our curated selection of top-tier fishing rods and gear.</p>
+
+      <!-- Course 2 -->
+      <div
+        class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col">
+        <div class="h-48 bg-slate-200 relative group overflow-hidden">
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-teal-400 to-emerald-300 group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <div
+            class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-slate-800">
+            Intermediate</div>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <h3 class="text-xl font-bold text-slate-900 mb-2">Fly Fishing Mastery</h3>
+          <p class="text-slate-600 text-sm mb-4 flex-1">refined techniques for trout and river fishing enthusiasts.</p>
+          <div class="mt-auto pt-4 border-t border-slate-100 flex justify-between items-center">
+            <span class="text-slate-900 font-bold">$79.99</span>
+            <a href="{{ url_for('main.lessons') }}"
+              class="text-brand-600 hover:text-brand-700 font-medium text-sm flex items-center">
+              View Details <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-body">
-          <h3 class="h4-heading">Expert assistance</h3>
-          <p>Our support team is ready to help with any questions or guidance you need.</p>
+
+      <!-- Course 3 -->
+      <div
+        class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col">
+        <div class="h-48 bg-slate-200 relative group overflow-hidden">
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-indigo-400 to-purple-300 group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <div
+            class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-slate-800">
+            Advanced</div>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <h3 class="text-xl font-bold text-slate-900 mb-2">Saltwater Tactics</h3>
+          <p class="text-slate-600 text-sm mb-4 flex-1">Deep sea strategies for the adventurous angler.</p>
+          <div class="mt-auto pt-4 border-t border-slate-100 flex justify-between items-center">
+            <span class="text-slate-900 font-bold">$99.99</span>
+            <a href="{{ url_for('main.lessons') }}"
+              class="text-brand-600 hover:text-brand-700 font-medium text-sm flex items-center">
+              View Details <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="text-center mt-12">
+      <a href="{{ url_for('main.lessons') }}"
+        class="inline-flex items-center px-6 py-3 border border-slate-300 shadow-sm text-base font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 transition-colors">
+        View All Courses
+      </a>
+    </div>
   </div>
 </section>
-

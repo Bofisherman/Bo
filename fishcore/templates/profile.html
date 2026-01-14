@@ -1,45 +1,87 @@
 {% extends "base.html" %}
-{% block content %}
-<section class="min-h-screen py-12 px-4">
-  <div class="max-w-3xl mx-auto">
-    <div class="flex flex-col items-center text-center">
-      <div class="relative">
-       <div class="w-32 h-32 rounded-full">
+{% block title %}My Profile - BO Fisherman{% endblock %}
 
-          <img src="{{ url_for('static', filename='uploads/' ~ (user.profile_picture or 'default-avatar.png')) }}"
-               class="w-full h-full object-cover rounded-full border-4 border-[#0F0F0E]">
+{% block content %}
+<div class="bg-slate-50 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden">
+
+    <!-- Profile Header -->
+    <div class="bg-slate-900 px-8 py-10 text-center relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-brand-900 to-slate-900 opacity-50"></div>
+      <div class="relative z-10">
+        <div class="inline-block relative">
+          <div class="w-32 h-32 rounded-full p-1 bg-white">
+            <img src="{{ url_for('static', filename='uploads/' ~ (user.profile_picture or 'default-avatar.png')) }}"
+              alt="Profile" class="w-full h-full object-cover rounded-full bg-slate-200">
+          </div>
+          <button
+            class="absolute bottom-0 right-0 bg-brand-500 rounded-full p-2 text-white hover:bg-brand-600 transition-colors shadow-lg">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z">
+              </path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <h1 class="mt-4 text-3xl font-heading font-bold text-white">{{ user.first_name or "Angler" }} {{ user.last_name
+          or "" }}</h1>
+        <p class="text-brand-200 font-medium">{{ user.email }}</p>
+
+        <div class="mt-6">
+          <a href="{{ url_for('main.edit_profile') }}"
+            class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-full text-slate-900 bg-brand-400 hover:bg-brand-300 transition-colors shadow-sm">
+            Edit Profile
+          </a>
         </div>
       </div>
-      <h1 class="mt-4 text-3xl font-bold">{{ user.first_name or "Your" }} {{ user.last_name or "Name" }}</h1>
-      <p class="text-gray-400">{{ user.email }}</p>
-      <a href="{{ url_for('main.edit_profile') }}" class="mt-4 bg-[#A7F3D0] text-black px-5 py-2 rounded-full font-medium hover:bg-[#8bd2b5] transition">
-        Edit Profile
-      </a>
     </div>
 
-    <div class="grid grid-cols-2 gap-6 mt-10 text-sm">
-      <div>
-        <p class="text-gray-400">Birthdate</p>
-        <p class="mt-1">{{ user.birthdate or "—" }}</p>
-      </div>
-      <div>
-        <p class="text-gray-400">Phone</p>
-        <p class="mt-1">{{ user.phone or "—" }}</p>
-      </div>
-      <div>
-        <p class="text-gray-400">City</p>
-        <p class="mt-1">{{ user.city or "—" }}</p>
-      </div>
-      <div>
-        <p class="text-gray-400">Country</p>
-        <p class="mt-1">{{ user.country or "—" }}</p>
-      </div>
-    </div>
+    <!-- Profile Details -->
+    <div class="px-8 py-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+          <h3 class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-3">Personal Info</h3>
+          <dl class="space-y-4">
+            <div class="flex justify-between">
+              <dt class="text-slate-600 font-medium">Birthdate</dt>
+              <dd class="text-slate-900 font-bold">{{ user.birthdate or "—" }}</dd>
+            </div>
+            <div class="flex justify-between">
+              <dt class="text-slate-600 font-medium">Phone</dt>
+              <dd class="text-slate-900 font-bold">{{ user.phone or "—" }}</dd>
+            </div>
+            <div class="flex justify-between">
+              <dt class="text-slate-600 font-medium">Joined</dt>
+              <dd class="text-slate-900 font-bold">Jan 2024</dd>
+            </div>
+          </dl>
+        </div>
 
-    <div class="mt-10">
-      <h2 class="text-xl font-semibold mb-2">About</h2>
-      <p class="text-gray-300">{{ user.bio or "No bio added yet. Click 'Edit Profile' to tell us about yourself." }}</p>
+        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+          <h3 class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-3">Location</h3>
+          <dl class="space-y-4">
+            <div class="flex justify-between">
+              <dt class="text-slate-600 font-medium">City</dt>
+              <dd class="text-slate-900 font-bold">{{ user.city or "—" }}</dd>
+            </div>
+            <div class="flex justify-between">
+              <dt class="text-slate-600 font-medium">Country</dt>
+              <dd class="text-slate-900 font-bold">{{ user.country or "—" }}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-100 pt-8">
+        <h2 class="text-xl font-bold text-slate-900 mb-4">About Me</h2>
+        <p class="text-slate-600 leading-relaxed dark:text-gray-400">
+          {{ user.bio or "No bio added yet. Tell us about your favorite fishing spots or biggest catch!" }}
+        </p>
+      </div>
     </div>
   </div>
-</section>
+</div>
 {% endblock %}

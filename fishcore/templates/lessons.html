@@ -2,59 +2,87 @@
 {% block title %}Fishing Lessons - BO Fisherman{% endblock %}
 
 {% block content %}
-<header style="position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+<div class="relative min-h-screen bg-slate-900 flex flex-col">
 
-  <!-- Background Image -->
-  <img src="{{ url_for('static', filename='images/login3.jpg') }}"
-       alt="Fishing background"
-       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-              object-fit: cover; z-index: 1;">
+  <!-- Background -->
+  <div class="absolute inset-0 z-0">
+    <img src="{{ url_for('static', filename='images/login3.jpg') }}" alt="Fishing Background"
+      class="w-full h-full object-cover opacity-30">
+    <div class="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-900/80 to-slate-900"></div>
+  </div>
 
-  <!-- Overlay Content -->
-  <div style="position: relative; z-index: 2; width: 100%; max-width: 1000px; padding: 2rem;">
-    <div class="category-grid-overlay">
-      {% for cat in categories %}
-        <button class="category-card" data-category-id="{{ cat.id }}">
-          <h3>{{ cat.name }}</h3>
-        </button>
-      {% endfor %}
+  <!-- Content -->
+  <div class="relative z-10 flex-grow py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+
+    <div class="text-center mb-16">
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-white mb-4">Start Learning Today</h1>
+      <p class="text-xl text-slate-300 max-w-2xl mx-auto">Select a category to explore our library of expert fishing
+        lessons.</p>
     </div>
 
-    <div id="lesson-viewer" class="lesson-viewer"></div>
-  </div>
-</header>
+    <div x-data="{ selectedCategory: null, lessons: {{ category_lessons | tojson }} }">
 
-<!-- JS section -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const lessonsData = {{ category_lessons | tojson }};
-    const viewer = document.getElementById('lesson-viewer');
-    const categoryCards = document.querySelectorAll('.category-card');
+      <!-- Category Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
+        {% for cat in categories %}
+        <button @click="selectedCategory = '{{ cat.id }}'"
+          :class="{ 'bg-brand-600 border-brand-500 ring-2 ring-brand-400': selectedCategory == '{{ cat.id }}', 'bg-white/10 hover:bg-white/20 border-white/10': selectedCategory != '{{ cat.id }}' }"
+          class="p-4 rounded-xl border backdrop-blur-sm transition-all duration-200 text-center group">
+          <h3 class="text-lg font-bold text-white group-hover:scale-105 transition-transform">{{ cat.name }}</h3>
+        </button>
+        {% endfor %}
+      </div>
 
-    categoryCards.forEach(card => {
-      card.addEventListener('click', () => {
-        const id = card.dataset.categoryId;
-        const lessons = lessonsData[id];
+      <!-- Lessons Display -->
+      <div class="min-h-[300px]" x-show="selectedCategory" x-transition.opacity>
 
-        if (!lessons || lessons.length === 0) {
-          viewer.innerHTML = `<p style="color:white;"><em>No lessons in this category yet.</em></p>`;
-          return;
-        }
+        <!-- Lesson Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <template x-for="lesson in lessons[selectedCategory]" :key="lesson.id">
+            <div
+              class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col">
 
-        const html = lessons.map(lesson => `
-          <div class="lesson-card">
-            <h3>${lesson.title}</h3>
-            <p>${lesson.description}</p>
-            ${lesson.media_type === 'video'
-              ? `<video controls width="100%"><source src="${lesson.media_url}" type="video/mp4"></video>`
-              : `<img src="${lesson.media_url}" alt="${lesson.title}" style="width:100%; border-radius:8px;">`
-            }
+              <!-- Media -->
+              <div class="aspect-w-16 aspect-h-9 bg-slate-200">
+                <template x-if="lesson.media_type === 'video'">
+                  <video controls width="100%" class="object-cover w-full h-full">
+                    <source :src="lesson.media_url" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </template>
+                <template x-if="lesson.media_type !== 'video'">
+                  <img :src="lesson.media_url" :alt="lesson.title" class="object-cover w-full h-full">
+                </template>
+              </div>
+
+              <!-- Content -->
+              <div class="p-6 flex-1 flex flex-col">
+                <h3 x-text="lesson.title" class="text-xl font-bold text-slate-900 mb-2"></h3>
+                <p x-text="lesson.description" class="text-slate-600 text-sm flex-1"></p>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <!-- Empty State -->
+        <div x-show="!lessons[selectedCategory] || lessons[selectedCategory].length === 0" class="text-center py-12">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-800 text-slate-500 mb-4">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+              </path>
+            </svg>
           </div>
-        `).join('');
+          <p class="text-slate-400 text-lg">No lessons found in this category yet.</p>
+        </div>
+      </div>
 
-        viewer.innerHTML = `<div class="lesson-grid">${html}</div>`;
-      });
-    });
-  });
-</script>
+      <!-- Initial State -->
+      <div x-show="!selectedCategory" class="text-center py-12 text-slate-500">
+        <p>Select a category above to view lessons.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
 {% endblock %}

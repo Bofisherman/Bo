@@ -1,9 +1,27 @@
-<section class="section">
-  <div class="container">
-    <h2 class="h2-heading">Join Our Newsletter</h2>
-    <form method="POST" action="/subscribe">
-      <input type="email" name="email" placeholder="Your email address" required class="input-field">
-      <button type="submit" class="button primary-button">Subscribe</button>
+<section class="py-20 bg-brand-600 relative overflow-hidden">
+  <!-- Decorative circles -->
+  <div
+    class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-brand-500 opacity-50 blur-3xl">
+  </div>
+  <div
+    class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-80 h-80 rounded-full bg-brand-400 opacity-30 blur-3xl">
+  </div>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+    <h2 class="text-3xl md:text-4xl font-heading font-bold text-white mb-4">Join Our Community</h2>
+    <p class="text-brand-100 text-lg mb-8 max-w-2xl mx-auto">
+      Stay updated with the latest fishing tips, seasonal guides, and exclusive gear offers delivered straight to your
+      inbox.
+    </p>
+
+    <form method="POST" action="/subscribe" class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
+      <input type="email" name="email" placeholder="Your email address" required
+        class="w-full px-5 py-3 rounded-full border-2 border-transparent focus:border-brand-300 focus:ring-0 text-slate-900 placeholder-slate-500 outline-none">
+      <button type="submit"
+        class="px-8 py-3 rounded-full bg-brand-800 text-white font-semibold hover:bg-slate-900 transition-colors shadow-lg">
+        Subscribe
+      </button>
     </form>
+    <p class="mt-4 text-xs text-brand-200">No spam, just good vibes and great catches.</p>
   </div>
 </section>

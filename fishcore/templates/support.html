@@ -1,9 +1,84 @@
 {% extends "base.html" %}
 {% block title %}Support | BO Fisherman{% endblock %}
+
 {% block content %}
-  <section class="page-section">
-    <h2>Support</h2>
-    <p>Need help? Browse FAQs or submit a ticket below.</p>
-    <!-- Support form or links coming soon -->
-  </section>
+<div class="bg-white py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-3xl font-heading font-bold tracking-tight text-slate-900 sm:text-4xl">Support Center</h2>
+      <p class="mt-6 text-lg leading-8 text-slate-600">We're here to help. Find answers to common questions or get in
+        touch with our team.</p>
+    </div>
+
+    <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+      <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+
+        <!-- FAQs -->
+        <a href="{{ url_for('main.home') }}#faq"
+          class="flex flex-col group hover:bg-slate-50 p-8 rounded-2xl transition-colors border border-slate-100 shadow-sm">
+          <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-slate-900">
+            <div
+              class="h-10 w-10 flex items-center justify-center rounded-lg bg-brand-600 group-hover:bg-brand-700 transition-colors">
+              <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+              </svg>
+            </div>
+            FAQs
+          </dt>
+          <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-slate-600">
+            <p class="flex-auto">Browse our frequently asked questions to find quick answers about courses, shipping,
+              and more.</p>
+            <p class="mt-6 text-brand-600 font-medium group-hover:translate-x-1 transition-transform">Browse FAQs <span
+                aria-hidden="true">→</span></p>
+          </dd>
+        </a>
+
+        <!-- Contact -->
+        <a href="{{ url_for('main.contact') }}"
+          class="flex flex-col group hover:bg-slate-50 p-8 rounded-2xl transition-colors border border-slate-100 shadow-sm">
+          <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-slate-900">
+            <div
+              class="h-10 w-10 flex items-center justify-center rounded-lg bg-brand-600 group-hover:bg-brand-700 transition-colors">
+              <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+              </svg>
+            </div>
+            Contact Us
+          </dt>
+          <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-slate-600">
+            <p class="flex-auto">Can't find what you're looking for? Send us a message and we'll get back to you
+              shortly.</p>
+            <p class="mt-6 text-brand-600 font-medium group-hover:translate-x-1 transition-transform">Get in touch <span
+                aria-hidden="true">→</span></p>
+          </dd>
+        </a>
+
+        <!-- Community -->
+        <a href="#"
+          class="flex flex-col group hover:bg-slate-50 p-8 rounded-2xl transition-colors border border-slate-100 shadow-sm">
+          <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-slate-900">
+            <div
+              class="h-10 w-10 flex items-center justify-center rounded-lg bg-brand-600 group-hover:bg-brand-700 transition-colors">
+              <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+              </svg>
+            </div>
+            Community
+          </dt>
+          <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-slate-600">
+            <p class="flex-auto">Join our community forum to ask questions to fellow anglers and share your experiences.
+            </p>
+            <p class="mt-6 text-brand-600 font-medium group-hover:translate-x-1 transition-transform">Join Discussion
+              <span aria-hidden="true">→</span></p>
+          </dd>
+        </a>
+
+      </dl>
+    </div>
+  </div>
+</div>
 {% endblock %}

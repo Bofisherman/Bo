@@ -1,38 +1,79 @@
-<section class="section secondary-section">
-  <div class="container">
-    <div class="utility-text-align-center utility-margin-bottom-4rem">
-      <p class="eyebrow">Recent News</p>
-      <h2 class="h2-heading">Dive into Our Fishing Knowledge</h2>
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+      <div class="max-w-2xl">
+        <span class="text-brand-600 font-semibold tracking-wide uppercase text-sm">Recent News</span>
+        <h2 class="text-3xl md:text-4xl font-heading font-bold text-slate-900 mt-2">Dive into Our Fishing Knowledge</h2>
+      </div>
+      <a href="{{ url_for('main.blog') }}"
+        class="hidden md:inline-flex items-center text-slate-600 hover:text-brand-600 font-medium transition-colors">
+        View all articles <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
     </div>
-    <div class="grid-layout desktop-4-column">
-      <div class="card">
-        <img src="{{ url_for('static', filename='images/7d19483b-635d-432e-829a-560a245e05e7.avif') }}" alt="Blog 1" class="card-image">
-        <div class="card-body">
-          <h3 class="h4-heading">Perfecting Casting Techniques</h3>
-          <p>Enhance your casting skills for better outcomes.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Blog 1 -->
+      <article class="flex flex-col group cursor-pointer">
+        <div class="relative overflow-hidden rounded-xl mb-4 shadow-sm bg-slate-100 aspect-w-16 aspect-h-9">
+          <img src="{{ url_for('static', filename='images/7d19483b-635d-432e-829a-560a245e05e7.avif') }}"
+            alt="Casting Techniques"
+            class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500">
         </div>
-      </div>
-      <div class="card">
-        <img src="{{ url_for('static', filename='images/a22d1997-9890-491e-949b-5c1aacedc7db.avif') }}" alt="Blog 2" class="card-image">
-        <div class="card-body">
-          <h3 class="h4-heading">Selecting Optimal Gear</h3>
-          <p>How to choose suitable equipment for your needs.</p>
+        <h3 class="text-lg font-bold text-slate-900 group-hover:text-brand-600 transition-colors mb-2 line-clamp-2">
+          <a href="#">Perfecting Casting Techniques</a>
+        </h3>
+        <p class="text-slate-500 text-sm line-clamp-2">Enhance your casting skills for better outcomes.</p>
+      </article>
+
+      <!-- Blog 2 -->
+      <article class="flex flex-col group cursor-pointer">
+        <div class="relative overflow-hidden rounded-xl mb-4 shadow-sm bg-slate-100 aspect-w-16 aspect-h-9">
+          <img src="{{ url_for('static', filename='images/a22d1997-9890-491e-949b-5c1aacedc7db.avif') }}"
+            alt="Selecting Gear"
+            class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500">
         </div>
-      </div>
-      <div class="card">
-        <img src="{{ url_for('static', filename='images/407b3227-71cf-4c91-8592-9687f71e3567.avif') }}" alt="Blog 3" class="card-image">
-        <div class="card-body">
-          <h3 class="h4-heading">Decoding Fish Patterns</h3>
-          <p>Understand fish behavior and increase success.</p>
+        <h3 class="text-lg font-bold text-slate-900 group-hover:text-brand-600 transition-colors mb-2 line-clamp-2">
+          <a href="#">Selecting Optimal Gear</a>
+        </h3>
+        <p class="text-slate-500 text-sm line-clamp-2">How to choose suitable equipment for your needs.</p>
+      </article>
+
+      <!-- Blog 3 -->
+      <article class="flex flex-col group cursor-pointer">
+        <div class="relative overflow-hidden rounded-xl mb-4 shadow-sm bg-slate-100 aspect-w-16 aspect-h-9">
+          <img src="{{ url_for('static', filename='images/407b3227-71cf-4c91-8592-9687f71e3567.avif') }}"
+            alt="Fish Patterns"
+            class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500">
         </div>
-      </div>
-      <div class="card">
-        <img src="{{ url_for('static', filename='images/c58db4ea-87a6-4a83-89b7-fe7d394ce44b.avif') }}" alt="Blog 4" class="card-image">
-        <div class="card-body">
-          <h3 class="h4-heading">Adapting to Seasonal Changes</h3>
-          <p>Adjust your techniques with the seasons.</p>
+        <h3 class="text-lg font-bold text-slate-900 group-hover:text-brand-600 transition-colors mb-2 line-clamp-2">
+          <a href="#">Decoding Fish Patterns</a>
+        </h3>
+        <p class="text-slate-500 text-sm line-clamp-2">Understand fish behavior and increase success.</p>
+      </article>
+
+      <!-- Blog 4 -->
+      <article class="flex flex-col group cursor-pointer">
+        <div class="relative overflow-hidden rounded-xl mb-4 shadow-sm bg-slate-100 aspect-w-16 aspect-h-9">
+          <img src="{{ url_for('static', filename='images/c58db4ea-87a6-4a83-89b7-fe7d394ce44b.avif') }}"
+            alt="Seasonal Changes"
+            class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500">
         </div>
-      </div>
+        <h3 class="text-lg font-bold text-slate-900 group-hover:text-brand-600 transition-colors mb-2 line-clamp-2">
+          <a href="#">Adapting to Seasonal Changes</a>
+        </h3>
+        <p class="text-slate-500 text-sm line-clamp-2">Adjust your techniques with the seasons.</p>
+      </article>
+    </div>
+
+    <div class="mt-8 text-center md:hidden">
+      <a href="{{ url_for('main.blog') }}"
+        class="inline-flex items-center text-slate-600 hover:text-brand-600 font-medium transition-colors">
+        View all articles <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
     </div>
   </div>
 </section>

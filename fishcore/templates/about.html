@@ -3,29 +3,89 @@
 {% block title %}About Us | BO Fisherman{% endblock %}
 
 {% block content %}
-<section class="section">
-  <div class="container narrow-container">
-    <h1 class="h2-heading">About BO Fisherman</h1>
-    <p class="paragraph-lg utility-text-secondary">
-      BO Fisherman is more than a brand — it's a community of anglers dedicated to learning, exploring, and thriving on the water.
-    </p>
-
-    <div class="utility-margin-top-3rem">
-      <h3 class="h3-heading">Our Mission</h3>
-      <p>
-        We help beginners and pros alike improve their fishing techniques, choose the right gear, and engage with a global community through our expert-led online courses and quality equipment.
-      </p>
-
-      <h3 class="h3-heading utility-margin-top-2rem">Why We Do It</h3>
-      <p>
-        We believe fishing is a way to connect — with nature, with others, and with yourself. That’s why we’re passionate about teaching and sharing our experience.
-      </p>
-
-      <h3 class="h3-heading utility-margin-top-2rem">Join the Community</h3>
-      <p>
-        From detailed tutorials to vibrant forums and events, BO Fisherman is your trusted partner for all things fishing.
+<div class="bg-white">
+  <!-- Hero Section -->
+  <section class="relative py-20 bg-slate-900 overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+      <img src="{{ url_for('static', filename='images/login3.jpg') }}" alt="Fishing Background"
+        class="w-full h-full object-cover">
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-white mb-6">Our Story</h1>
+      <p class="text-xl text-slate-300 max-w-3xl mx-auto">
+        BO Fisherman is more than a brand — it's a community of anglers dedicated to learning, exploring, and thriving
+        on the water.
       </p>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- Mission Section -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div>
+          <span class="text-brand-600 font-semibold tracking-wide uppercase text-sm">Our Mission</span>
+          <h2 class="text-3xl md:text-4xl font-heading font-bold text-slate-900 mt-2 mb-6">Empowering Anglers Everywhere
+          </h2>
+          <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+            We help beginners and pros alike improve their fishing techniques, choose the right gear, and engage with a
+            global community through our expert-led online courses and quality equipment.
+          </p>
+          <p class="text-lg text-slate-600 leading-relaxed">
+            We believe fishing is a way to connect — with nature, with others, and with yourself. That’s why we’re
+            passionate about teaching and sharing our experience.
+          </p>
+        </div>
+        <div class="relative">
+          <div class="aspect-w-4 aspect-h-3 rounded-2xl overflow-hidden shadow-2xl skew-y-3 bg-slate-100">
+            <img src="{{ url_for('static', filename='images/selfie.jpg') }}" alt="Bo Fisherman Team"
+              class="object-cover w-full h-full">
+          </div>
+          <div
+            class="absolute -bottom-6 -left-6 w-24 h-24 bg-brand-100 rounded-full flex items-center justify-center z-[-1]">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics / Trust -->
+  <section class="bg-slate-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="p-4">
+          <div class="text-4xl font-bold text-brand-600 mb-2">5k+</div>
+          <div class="text-slate-600 font-medium">Students Enrolled</div>
+        </div>
+        <div class="p-4">
+          <div class="text-4xl font-bold text-brand-600 mb-2">50+</div>
+          <div class="text-slate-600 font-medium">Expert Courses</div>
+        </div>
+        <div class="p-4">
+          <div class="text-4xl font-bold text-brand-600 mb-2">100%</div>
+          <div class="text-slate-600 font-medium">Satisfaction Rate</div>
+        </div>
+        <div class="p-4">
+          <div class="text-4xl font-bold text-brand-600 mb-2">24/7</div>
+          <div class="text-slate-600 font-medium">Community Support</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Join CTA -->
+  <section class="py-20 text-center">
+    <div class="max-w-3xl mx-auto px-4">
+      <h2 class="text-3xl font-heading font-bold text-slate-900 mb-6">Join the Community</h2>
+      <p class="text-lg text-slate-600 mb-8">
+        From detailed tutorials to vibrant forums and events, BO Fisherman is your trusted partner for all things
+        fishing.
+      </p>
+      <a href="{{ url_for('main.register') }}"
+        class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-brand-600 hover:bg-brand-700 shadow-lg transition-colors">
+        Get Started Today
+      </a>
+    </div>
+  </section>
+</div>
 {% endblock %}

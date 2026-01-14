@@ -1,97 +1,97 @@
-{# base.html #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}BO Fisherman{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BO Fisherman - Premium Fishing Education{% endblock %}</title>
 
-  <!-- Webflow Stylesheets -->
- <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/flowbite@1.6.4/dist/flowbite.min.js"></script>
-<script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        heading: ['Lexend', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 
- <script src="{{ url_for('static', filename='js/webflow.js') }}"></script>
-  <link href="https://unpkg.com/flowbite@1.6.4/dist/flowbite.min.css" rel="stylesheet" />
-  <link href="{{ url_for('static', filename='css/normalize.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/webflow.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/bofisherman-com.webflow.css') }}" rel="stylesheet">
-<!-- Tailwind CDN (for development / testing) -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Alpine.js for interactions -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
- <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}?v=2" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
 
+    {% block extra_head %}{% endblock %}
 
-
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans&family=Lexend&display=swap" rel="stylesheet">
-
-  {% block extra_head %}{% endblock %}
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Lexend', sans-serif;
+        }
+        [x-cloak] { display: none !important; }
+    </style>
 </head>
-<body>
-  {% include 'navbar.html' %}
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <ul class="flashes">
-        {% for category, message in messages %}
-          <li class="alert alert-{{ category }}">{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+<body class="flex flex-col min-h-screen bg-slate-50 text-slate-800">
 
-  <main>
-    {% block content %}{% endblock %}
-  </main>
+    {% include 'navbar.html' %}
 
-  {% include 'footer.html' %}
+    <!-- Flash Messages -->
+    <div class="fixed top-24 right-5 z-50 w-full max-w-sm">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)" 
+                         x-transition:enter="transform ease-out duration-300 transition"
+                         x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+                         x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0"
+                         x-transition:leave="transition ease-in duration-100"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
+                         class="mb-3 p-4 rounded-xl shadow-lg border-l-4 flex items-center justify-between bg-white
+                         {% if category == 'error' %}border-red-500 text-red-700{% else %}border-brand-500 text-brand-700{% endif %}">
+                        <span class="font-medium">{{ message }}</span>
+                        <button @click="show = false" class="text-slate-400 hover:text-slate-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
 
-  <!-- Other JS scripts -->
-  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
-  <script src="{{ url_for('static', filename='js/webflow.js') }}"></script>
+    <!-- Main Content -->
+    <main class="flex-grow">
+        {% block content %}{% endblock %}
+    </main>
 
-  <!-- 🔧 Place toggleMenu here at the end -->
-  <script>
-  function toggleMenu() {
-    const menu = document.getElementById('navMenu');
-    const toggle = document.getElementById('navToggle');
-
-    menu.classList.toggle('active');
-    toggle.textContent = menu.classList.contains('active') ? '←' : '☰';
-  }
-</script>
-<script>
-  function toggleMenu() {
-    const menu = document.getElementById('navMenu');
-    const toggle = document.getElementById('navToggle');
-
-    const isOpen = menu.classList.contains('active');
-    menu.classList.toggle('active');
-    toggle.textContent = isOpen ? '☰' : '←';
-  }
-
-  // Auto close menu when a link is clicked
-  document.querySelectorAll('#navMenu a').forEach(link => {
-    link.addEventListener('click', () => {
-      const menu = document.getElementById('navMenu');
-      const toggle = document.getElementById('navToggle');
-      menu.classList.remove('active');
-      toggle.textContent = '☰';
-    });
-  });
-</script>
-<script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const alerts = document.querySelectorAll('.flashes .alert');
-    alerts.forEach(alert => {
-      setTimeout(() => {
-        alert.style.opacity = '0';
-        alert.style.transform = 'translateY(-10px)';
-        setTimeout(() => alert.remove(), 500); // cleanup
-      }, 3000); // 3 seconds
-    });
-  });
-</script>
+    {% include 'footer.html' %}
 
 </body>
 </html>

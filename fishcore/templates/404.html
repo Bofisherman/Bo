@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Page Not Found | BO Fisherman{% endblock %}
+
+{% block content %}
+<div class="min-h-[70vh] flex items-center justify-center bg-slate-50 px-4">
+    <div class="max-w-md w-full text-center">
+        <!-- 404 Illustration placeholder or text -->
+        <h1 class="text-9xl font-heading font-extrabold text-brand-200">404</h1>
+
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-4">Page not found</h2>
+        <p class="text-lg text-slate-600 mt-4 mb-8">
+            Looks like you've cast your line into empty waters. The page you're looking for has moved or doesn't exist.
+        </p>
+
+        <a href="{{ url_for('main.home') }}"
+            class="inline-flex items-center px-8 py-3 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-all shadow-lg hover:shadow-xl hover:-translate-y-1">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18">
+                </path>
+            </svg>
+            Return Home
+        </a>
+    </div>
+</div>
+{% endblock %}

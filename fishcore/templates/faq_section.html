@@ -1,26 +1,74 @@
-<section class="section secondary-section">
-  <div class="container small-container">
-    <div class="utility-text-align-center utility-margin-bottom-4rem">
-      <div class="eyebrow">Fishing FAQs</div>
-      <h2>Discover Our Fishing Courses</h2>
-      <p class="subheading">Access expert-led courses and premium gear. Ideal for all skill levels.</p>
+<section class="py-20 bg-slate-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <span class="text-brand-600 font-semibold tracking-wide uppercase text-sm">Fishing FAQs</span>
+      <h2 class="text-3xl md:text-4xl font-heading font-bold text-slate-900 mt-2">Common Questions</h2>
+      <p class="mt-4 text-lg text-slate-600">Everything you need to know about our courses and gear.</p>
     </div>
-    <div class="flex-vertical flex-gap-md">
-      <div class="divider">
-        <h4 class="h4-heading">Available Courses</h4>
-        <p>Courses range from beginner to advanced, covering techniques and gear.</p>
+
+    <div x-data="{ active: null }" class="space-y-4">
+      <!-- FAQ 1 -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <button @click="active === 1 ? active = null : active = 1"
+          class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none">
+          <span class="text-lg font-medium text-slate-900">What do the courses cover?</span>
+          <svg class="w-5 h-5 text-slate-500 transform transition-transform duration-200"
+            :class="{'rotate-180': active === 1}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div x-show="active === 1" x-collapse class="px-6 pb-4 text-slate-600">
+          <p>Our courses range from absolute beginner basics to advanced professional techniques. We cover gear
+            selection, casting, location scouting, environmental factors, and specific species tactics.</p>
+        </div>
       </div>
-      <div class="divider">
-        <h4 class="h4-heading">Video Access</h4>
-        <p>Register to view course videos anytime via your account.</p>
+
+      <!-- FAQ 2 -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <button @click="active === 2 ? active = null : active = 2"
+          class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none">
+          <span class="text-lg font-medium text-slate-900">How do I access the videos?</span>
+          <svg class="w-5 h-5 text-slate-500 transform transition-transform duration-200"
+            :class="{'rotate-180': active === 2}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div x-show="active === 2" x-collapse class="px-6 pb-4 text-slate-600">
+          <p>Once registered, you get lifetime access to your purchased courses. You can log in and view them from any
+            device, anytime.</p>
+        </div>
       </div>
-      <div class="divider">
-        <h4 class="h4-heading">Gear Purchase</h4>
-        <p>Purchase rods and equipment directly from our online store.</p>
+
+      <!-- FAQ 3 -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <button @click="active === 3 ? active = null : active = 3"
+          class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none">
+          <span class="text-lg font-medium text-slate-900">Do you ship international?</span>
+          <svg class="w-5 h-5 text-slate-500 transform transition-transform duration-200"
+            :class="{'rotate-180': active === 3}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div x-show="active === 3" x-collapse class="px-6 pb-4 text-slate-600">
+          <p>Yes! We ship our premium gear globally. Shipping times and costs vary by location, which will be calculated
+            at checkout.</p>
+        </div>
       </div>
-      <div class="divider">
-        <h4 class="h4-heading">Customer Support</h4>
-        <p>Our support team is ready to assist with course or purchase inquiries.</p>
+
+      <!-- FAQ 4 -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <button @click="active === 4 ? active = null : active = 4"
+          class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none">
+          <span class="text-lg font-medium text-slate-900">How can I contact support?</span>
+          <svg class="w-5 h-5 text-slate-500 transform transition-transform duration-200"
+            :class="{'rotate-180': active === 4}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div x-show="active === 4" x-collapse class="px-6 pb-4 text-slate-600">
+          <p>You can reach our dedicated support team via the Contact page or email us directly at
+            captainliangbo@gmail.com.</p>
+        </div>
       </div>
     </div>
   </div>
